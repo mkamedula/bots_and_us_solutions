@@ -71,6 +71,7 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
     add_executable(${CMAKE_PROJECT_NAME}_tests
             test/main_test.cpp
+            test/src/input_file_tests.cpp
             )
 
     target_link_libraries(${CMAKE_PROJECT_NAME}_tests PRIVATE

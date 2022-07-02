@@ -2,10 +2,15 @@
 
 #include "iostream"
 
-namespace example
+namespace botsAndUs
 {
-    void CodeParser::test()
-    {
-        std::cout << "test" << std::endl;
-    }
-} // namespace example
+CodeParser::CodeParser(std::string_view file)
+{
+
+}
+
+void CodeParser::exert()
+{
+
+}
+} // namespace botsAndUs
