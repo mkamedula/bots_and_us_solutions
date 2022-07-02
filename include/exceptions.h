@@ -12,6 +12,15 @@ struct InputFileExceptions : public std::exception
     }
 };
 
+struct FileDoesNotExists : public InputFileExceptions
+{
+    const char* what() const throw()
+    {
+        return "Could not find a requested input file..";
+    }
+};
+
+
 struct UnexpectedCodeLength : public InputFileExceptions
 {
     const char* what() const throw()
@@ -43,5 +52,7 @@ struct WrongFileEncoding : public InputFileExceptions
         return "Received an file encoded with unexpected standard. Expected UTF-8 file.";
     }
 };
+
+
 
 } // namespace botsAndUs
