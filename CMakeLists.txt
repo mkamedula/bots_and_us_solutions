@@ -73,6 +73,7 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
             test/main_test.cpp
             test/src/input_file_tests.cpp
             test/src/checksum_test.cpp
+            test/src/bit_code_tests.cpp
             )
 
     target_link_libraries(${CMAKE_PROJECT_NAME}_tests PRIVATE
