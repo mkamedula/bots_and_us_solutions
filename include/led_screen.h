@@ -17,13 +17,10 @@ class LedScreen
 
     const std::array<uint8_t, 32>& get();
 
-    bool save(std::string_view file_name);
-
   protected:
     std::array<uint8_t, 32> pixelCode_ = {};
     const size_t kPixelOffset = 1;
 
-    // TODO reverse (?)
     const std::unordered_map<char, int32_t> bitMap_{{'0', 0b01110111},
                                                     {'1', 0b01000010},
                                                     {'2', 0b10110110},

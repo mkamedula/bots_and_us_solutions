@@ -30,7 +30,7 @@ void savePng(Container& data, [[maybe_unused]] const std::string& file_name)
         c_data[i] = static_cast<unsigned char>(data[i]);
     }
 
-    savePngImp(*c_data, file_name, data.size()*8);
+    savePngImp(*c_data, file_name, data.size());
 
     free(c_data);
 }

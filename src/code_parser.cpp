@@ -19,7 +19,6 @@ CodeParser::CodeParser(const std::string& file, const std::string& save_folder)
 
     line_.reserve(4);
     reversed_line_.reserve(4);
-
 }
 
 void CodeParser::exert()
@@ -41,6 +40,7 @@ void CodeParser::exert()
         }
 
         screen_.update(std::to_string(checksum.value()) + line_);
+        savePng(screen_.get(), save_folder_ +  "/" + line_ + ".png");
     }
 }
 
