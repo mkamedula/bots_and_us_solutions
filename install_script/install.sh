@@ -35,6 +35,12 @@ args="-DBUILD_TESTING=OFF
       -DCATCH_INSTALL_DOCS=OFF"
 install_library || exit 1
 
+
+library=cxxopts
+args=""
+install_library || exit 1
+
+
 echo "Install code parser"
 
 cd ${ROOT_DIR}

@@ -7,7 +7,7 @@ include(GNUInstallDirs)
 
 set(EXT_LIBS_PATH "${CMAKE_INSTALL_PREFIX}")
 
-find_package(spdlog CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
+find_package(cxxopts CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 
 add_library(${CMAKE_PROJECT_NAME}
         src/code_parser.cpp
@@ -23,7 +23,6 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
         PRIVATE
-        spdlog::spdlog
         png
         )
 
@@ -53,7 +52,7 @@ write_basic_package_version_file("${CMAKE_PROJECT_NAME}ConfigVersion.cmake"
 
 install(EXPORT ${CMAKE_PROJECT_NAME}_Targets
         FILE ${CMAKE_PROJECT_NAME}Targets.cmake
-#        NAMESPACE test
+        #        NAMESPACE test
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
 
 install(FILES "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake"
@@ -62,10 +61,31 @@ install(FILES "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake"
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ ${PROJECT_SOURCE_DIR}/template/ DESTINATION include/)
 
-#
-#add_executable(codeParser main.cpp)
-#
-#
+
+add_executable(codeParser main.cpp)
+
+target_include_directories(codeParser PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/template>
+        $<INSTALL_INTERFACE:include>
+        )
+
+target_link_libraries(codeParser
+        PRIVATE
+        cxxopts::cxxopts
+        ${CMAKE_PROJECT_NAME}
+        )
+
+target_compile_features(codeParser PUBLIC
+        cxx_std_17
+        )
+
+install(TARGETS codeParser
+        EXPORT codeParser_Targets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
