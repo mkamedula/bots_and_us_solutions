@@ -12,6 +12,7 @@ find_package(spdlog CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 add_library(${CMAKE_PROJECT_NAME}
         src/code_parser.cpp
         src/led_screen.cpp
+        src/utils.cpp
         )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
@@ -23,6 +24,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
 target_link_libraries(${CMAKE_PROJECT_NAME}
         PRIVATE
         spdlog::spdlog
+        png
         )
 
 target_compile_features(${CMAKE_PROJECT_NAME} PUBLIC
@@ -74,6 +76,7 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
             test/src/input_file_tests.cpp
             test/src/checksum_test.cpp
             test/src/led_screen_test.cpp
+            test/src/save_png_test.cpp
             )
 
     target_link_libraries(${CMAKE_PROJECT_NAME}_tests PRIVATE
