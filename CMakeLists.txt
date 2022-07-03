@@ -12,7 +12,6 @@ find_package(spdlog CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 add_library(${CMAKE_PROJECT_NAME}
         src/code_parser.cpp
         )
-#add_library(namespace::${CMAKE_PROJECT_NAME}} ALIAS ${CMAKE_PROJECT_NAME}})
 
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
