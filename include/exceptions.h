@@ -1,58 +1,117 @@
 #pragma once
 
+#include <string>
 #include "exception"
 
 namespace botsAndUs::exceptions
 {
-struct InputFileExceptions : public std::exception
+
+struct InputException : public std::exception
 {
-    const char* what() const throw()
+  private:
+    std::string message = "An error processing input file.";
+
+  public:
+    InputException(const std::string& msg)
+        : message(msg)
     {
-        return "An error processing input file.";
+    }
+
+    InputException() = default;
+
+    virtual ~InputException() = default;
+
+    const char* what() const throw() override
+    {
+        return message.c_str();
     }
 };
 
-struct FileDoesNotExists : public InputFileExceptions
+struct FileException : public std::exception
 {
-    const char* what() const throw()
+  private:
+    std::string message = "An error processing a file.";
+
+  public:
+    FileException(const std::string& msg)
+        : message(msg)
     {
-        return "Could not find a requested input file..";
+    }
+
+    FileException() = default;
+
+    virtual ~FileException() = default;
+
+    const char* what() const throw() override
+    {
+        return message.c_str();
     }
 };
 
 
-struct UnexpectedCodeLength : public InputFileExceptions
+struct PngException : public std::exception
 {
-    const char* what() const throw()
+  private:
+    std::string message = "An error processing a PNG image.";
+
+  public:
+    PngException(const std::string& msg)
+        : message(msg)
     {
-        return "A file contains at least one code that is of an unexpected length.";
+    }
+
+    PngException() = default;
+
+    virtual ~PngException() = default;
+
+    const char* what() const throw() override
+    {
+        return message.c_str();
     }
 };
 
-struct UnexpectedCharacter : public InputFileExceptions
+struct FileDoesNotExists : public InputException
 {
-    const char* what() const throw()
+    FileDoesNotExists(const std::string& msg)
+        : InputException(msg)
     {
-        return "A file contains at least one code with a non-supported character in it.";
     }
+
+    FileDoesNotExists()
+        : InputException("Could not find a requested input file.")
+    {
+    };
+
 };
 
-struct WrongFileFormat : public InputFileExceptions
+
+struct UnexpectedCodeLength : public InputException
 {
-    const char* what() const throw()
+    UnexpectedCodeLength(const std::string& msg)
+        : InputException(msg)
     {
-        return "Received an ill-formatted file. At least one row is not a pure number.";
     }
+
+    UnexpectedCodeLength()
+        : InputException("A file contains at least one code that is of an unexpected length.")
+    {
+    };
+
 };
 
-struct WrongFileEncoding : public InputFileExceptions
+struct UnexpectedCharacter : public InputException
 {
-    const char* what() const throw()
+    UnexpectedCharacter(const std::string& msg)
+        : InputException(msg)
     {
-        return "Received an file encoded with unexpected standard. Expected UTF-8 file.";
     }
-};
 
+    UnexpectedCharacter()
+        : InputException("A file contains at least one code with a non-supported character in it.")
+    {
+    };
+
+};
 
 
 } // namespace botsAndUs
