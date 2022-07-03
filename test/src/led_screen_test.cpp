@@ -5,6 +5,7 @@
 
 namespace botsAndUs
 {
+
 SCENARIO("A pixel code is correctly generated when a valid input code is provided.")
 {
     // TODO TEMPLATE IT
@@ -32,7 +33,7 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
         THEN("The pixel code is generated correctly")
         {
             //TODO make sure the data generator works
-            REQUIRE(getPixelCode(std::get<std::string>(data.get()), test_array));
+            REQUIRE(getFullScreenCode(std::get<std::string>(data.get()), test_array));
             //TODO make sure these are correct ranges
             REQUIRE(std::all_of(test_array.begin(), test_array.begin() + 8, [](auto& value)
             {
@@ -70,7 +71,7 @@ SCENARIO("An invalid code has been provided to the pixel generator")
         auto data = GENERATE("67y8956", "6", "asccd ty ", "88865556678");
         THEN("The method returns false and it does not affect the original input.")
         {
-            REQUIRE(getPixelCode(data, test_array) == false);
+            REQUIRE(getFullScreenCode(data, test_array) == false);
             REQUIRE(test_array == init_array);
         }
 
