@@ -1,9 +1,8 @@
 #pragma once
 
-#include <array>
 #include <unordered_map>
 
-namespace BotsAndUs
+namespace botsAndUs
 {
 
 class LedScreen
@@ -11,27 +10,30 @@ class LedScreen
 
   public:
 
-    [[nodiscard]] bool update(std::string_view code);
+    LedScreen(){
+        pixelCode_.fill(0b11111111);
+    }
+    void update(std::string_view code);
 
-    const std::array<bool, 256>& get();
+    const std::array<uint8_t, 32>& get();
 
-    bool save(std::string_view folder);
+    bool save(std::string_view file_name);
 
   protected:
-    [[nodiscard]] bool getBitCode_(char id, std::array<bool,8>& code) const;
+    std::array<uint8_t, 32> pixelCode_ = {};
+    const size_t kPixelOffset = 1;
 
-    std::array<bool, 256> pixelCode_;
-
-    const std::unordered_map<char, std::array<bool, 8>> bitMap_{{'0', {0, 1, 1, 1, 0, 1, 1, 1}},
-                                                               {'1', {0, 1, 0, 0, 0, 0, 1, 1}},
-                                                               {'2', {1, 0, 1, 1, 0, 1, 1, 0}},
-                                                               {'3', {1, 1, 0, 1, 0, 1, 1, 0}},
-                                                               {'4', {1, 1, 0, 0, 0, 0, 1, 0}},
-                                                               {'5', {1, 1, 0, 1, 0, 1, 0, 1}},
-                                                               {'6', {1, 1, 1, 1, 0, 1, 0, 1}},
-                                                               {'7', {0, 1, 0, 0, 0, 1, 1, 1}},
-                                                               {'8', {1, 1, 1, 1, 0, 1, 1, 1}},
-                                                               {'9', {1, 1, 0, 1, 0, 1, 1, 1}}, };
+    // TODO reverse (?)
+    const std::unordered_map<char, int32_t> bitMap_{{'0', 0b01110111},
+                                                    {'1', 0b01000010},
+                                                    {'2', 0b10110110},
+                                                    {'3', 0b11010110},
+                                                    {'4', 0b11000011},
+                                                    {'5', 0b11010101},
+                                                    {'6', 0b11110101},
+                                                    {'7', 0b01000110},
+                                                    {'8', 0b11110111},
+                                                    {'9', 0b11010111},};
 
 };
 }

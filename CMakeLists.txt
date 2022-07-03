@@ -11,6 +11,7 @@ find_package(spdlog CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 
 add_library(${CMAKE_PROJECT_NAME}
         src/code_parser.cpp
+        src/led_screen.cpp
         )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC

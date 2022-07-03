@@ -1,22 +1,37 @@
+#include "exceptions.h"
 #include "led_screen.h"
 
-namespace BotsAndUs
+#include <algorithm>
+
+namespace botsAndUs
 {
 
-bool LedScreen::getBitCode_(char id, std::array<bool,8>& code) const
+void LedScreen::update(std::string_view code)
 {
-
-    auto isCode = bitMap_.find(id);
-
-    if (isCode == bitMap_.end())
+    if (code.size() != 6)
     {
-        return false;
+        throw exceptions::UnexpectedCodeLength();
     }
 
-    code = isCode->second;
+    if (std::any_of(code.begin(), code.end(), [&](const char c)
+    {
+        return !bitMap_.count(c);
+    }))
+    {
+        throw exceptions::UnexpectedCharacter();
+    }
 
-    return true;
+    auto start = kPixelOffset;
 
+    for (const auto& value: code)
+    {
+        pixelCode_[start++] = bitMap_.at(value);
+    }
+}
+
+const std::array<uint8_t, 32>& LedScreen::get()
+{
+    return pixelCode_;
 }
 
 }
