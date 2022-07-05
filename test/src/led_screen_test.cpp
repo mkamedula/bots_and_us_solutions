@@ -1,14 +1,14 @@
-#include "led_screen.h"
+#include "bit_stream.h"
 #include <catch2/catch.hpp>
 #include <iostream>
 
 
-namespace botsAndUs
+namespace xxxDisplay
 {
 
 SCENARIO("A pixel code is correctly generated when a valid input code is provided.")
 {
-    // TODO TEMPLATE IT
+
     GIVEN("A valid input code")
     {
         auto [code, solution] = GENERATE( table<std::string, std::array<uint8_t, 6>>({
@@ -26,7 +26,7 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
                                                             0b11000011}) }));
 
 
-        LedScreen screen;
+        BitStream screen;
 
 
 
@@ -35,8 +35,6 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
 
             REQUIRE_NOTHROW(screen.update(code));
 
-
-            //TODO make sure these are correct ranges
             REQUIRE(screen.get()[0] == 0b11111111);
 
             auto it = screen.get().begin() + 1;
@@ -56,7 +54,7 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
 
 SCENARIO("An invalid code has been provided to the pixel generator")
 {
-    LedScreen screen;
+    BitStream screen;
     screen.update("920834");
     auto init_array = screen.get();
 

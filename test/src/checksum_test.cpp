@@ -2,7 +2,7 @@
 
 #include <catch2/catch.hpp>
 
-namespace botsAndUs
+namespace xxxDisplay
 {
 SCENARIO("The checksum is being computed")
 {

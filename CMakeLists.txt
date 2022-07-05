@@ -10,8 +10,9 @@ set(EXT_LIBS_PATH "${CMAKE_INSTALL_PREFIX}")
 find_package(cxxopts CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 
 add_library(${CMAKE_PROJECT_NAME}
-        src/code_parser.cpp
-        src/led_screen.cpp
+        src/bit_stream.cpp
+        src/exceptions.cpp
+        src/file_wrapper.cpp
         src/utils.cpp
         )
 
@@ -93,8 +94,8 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
     add_executable(${CMAKE_PROJECT_NAME}_tests
             test/main_test.cpp
-            test/src/input_file_tests.cpp
             test/src/checksum_test.cpp
+            test/src/input_file_tests.cpp
             test/src/led_screen_test.cpp
             test/src/save_png_test.cpp
             )

@@ -1,39 +1,35 @@
 #pragma once
 
-#include <optional>
-#include <png.h>
-#include <array>
-#include <deque>
-#include <iostream>
-#include <bitset>
 #include "exceptions.h"
 
-namespace botsAndUs
+#include <array>
+#include <optional>
+#include <png.h>
+
+namespace xxxDisplay
 {
-// TODO change it to std variant with error?
+
+/**
+ * @brief Compute a mod 97 checksum of a given numerical string
+ * @param code a string containing only numerical characters of maximum length of 9 characters
+ * @return computed checksum or a fail mode
+ */
 std::optional<uint32_t> getMod97(const std::string& code);
 
 /**
- * based on (3/07/2022): http://www.libpng.org/pub/png/libpng-manual.txt and http://zarb.org/~gc/html/libpng.html
- * @param file_name
+ * @brief Save a 1-bit depth, greyscale PNG image from provided pixel data.
+ * A generate image will have a size 1 by 8*data.size.
+ *
+ * Save a PNG image from provided pixel data. Created image will be 1-bit depth, greyscale and 1-bit high.
+ * It will have a width equal to eight times the size of the container.
+ *
+ * @tparam Container a random access ordered data structure that holds a 1-byte of data per element
+ * @param data pointer to the container with the pixel data
+ * @param file_name name of the generated PNG image (with path)
  */
-void savePngImp(unsigned char& data, const std::string& file_name, size_t width);
-
-
-    template<typename Container>
-void savePng(Container& data, [[maybe_unused]] const std::string& file_name)
-{
-    unsigned char* c_data = (unsigned char*) malloc(sizeof(unsigned char) * data.size());
-
-    for (size_t i = 0; i < data.size(); i++)
-    {
-        c_data[i] = static_cast<unsigned char>(data[i]);
-    }
-
-    savePngImp(*c_data, file_name, data.size()*8);
-
-    free(c_data);
-}
-
+template<typename Container>
+void savePngRowImage(const Container& data, [[maybe_unused]] const std::string& file_name);
 
 }
+
+#include "utils.tpp"

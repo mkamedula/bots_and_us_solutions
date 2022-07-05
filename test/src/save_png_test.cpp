@@ -1,20 +1,20 @@
 #include "utils.h"
 
-#include <deque>
-
 #include <catch2/catch.hpp>
-#include <iostream>
 
-#include <string>
 #include <algorithm>
+#include <bitset>
+#include <iostream>
+#include <string>
 
-namespace botsAndUs
+namespace xxxDisplay
 {
 
 struct PngData
 {
     uint32_t height;
     uint32_t width;
+    uint32_t bits_number;
     unsigned char color_type;
     unsigned char  bit_depth;
     int  number_of_passes;
@@ -109,9 +109,11 @@ PngData readPngImage(const std::string& file_name)
 
     png_read_image(png_ptr, row_pointers);
 
+    pngData.bits_number = std::ceil(pngData.width*static_cast<double>(pngData.bit_depth)/8.0);
+
     for (y = 0; y < pngData.height; y++)
     {
-        auto test = std::vector<unsigned char>{row_pointers[y], row_pointers[y] + pngData.width};
+        auto test = std::vector<unsigned char>{row_pointers[y], row_pointers[y] + pngData.bits_number};
         pngData.pixels.push_back(test);
         free(row_pointers[y]);
     }
@@ -140,7 +142,7 @@ auto getSolution()
     return test;
 }
 
-void printComparisson(const std::string& file_name_1, const std::string& file_name_2)
+void printComparison(const std::string& file_name_1, const std::string& file_name_2)
 {
     auto data1 = readPngImage(file_name_1);
     auto data2 = readPngImage(file_name_2);
@@ -155,15 +157,18 @@ void printComparisson(const std::string& file_name_1, const std::string& file_na
         std::cout << "Width don't match " << data1.width << ", " << data2.width << std::endl;
     }
 
+    if (data1.bit_depth != data2.bit_depth)
+    {
+        std::cout << "Bit depth don't match " << data1.bit_depth << ", " << data2.bit_depth << std::endl;
+    }
+
     for (uint32_t i = 0; i < data1.height; i++)
     {
-
-        for (uint32_t k = 0; k < data1.width; k++)
+        for (uint32_t k = 0; k < data1.bits_number; k++)
         {
-
             if (data1.pixels[i][k] != data2.pixels[i][k])
             {
-                std::cout << "pixel mismatch " << i << ", " << k << ": " << (data1.pixels[i][k] != data2.pixels[i][k] )<< std::endl;
+                std::cout << "pixel mismatch " << i << ", " << k << ": " << std::bitset<8>(data1.pixels[i][k]) << "\t" << std::bitset<8>(data2.pixels[i][k]) << std::endl;
             }
         }
     }
@@ -175,15 +180,12 @@ SCENARIO("A valid stream of pixels is provided to the function")
     GIVEN("A valid pixel stream")
     {
         auto [file, stream] = GENERATE(table<std::string, std::array<uint8_t, 32>>({
-                                                                                       std::make_tuple(
-                                                                                           "../../test/resources/png_files/1337.png",
-                                                                                           getSolution()),
-                                                                                   }));
+            std::make_tuple("../../test/resources/png_files/1337_1bit.png", getSolution()), }));
 
         THEN("A correct png file is being saved.")
         {
-            REQUIRE_NOTHROW(savePng(stream, "test.png"));
-            printComparisson("test.png", file);
+            REQUIRE_NOTHROW(savePngRowImage(stream, "test.png"));
+            printComparison("test.png", file); // TODO remove
             REQUIRE(readPngImage("test.png") == readPngImage(file));
             // TODO remove the test file (?)
         }

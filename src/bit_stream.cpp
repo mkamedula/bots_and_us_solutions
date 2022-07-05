@@ -1,12 +1,12 @@
 #include "exceptions.h"
-#include "led_screen.h"
+#include "bit_stream.h"
 
 #include <algorithm>
 
-namespace botsAndUs
+namespace xxxDisplay
 {
 
-void LedScreen::update(std::string_view code)
+void BitStream::update(std::string_view code)
 {
     if (code.size() != 6)
     {
@@ -21,7 +21,7 @@ void LedScreen::update(std::string_view code)
         throw exceptions::UnexpectedCharacter();
     }
 
-    auto start = kPixelOffset;
+    auto start = pixelOffsetBytes_;
 
     for (const auto& value: code)
     {
@@ -29,9 +29,14 @@ void LedScreen::update(std::string_view code)
     }
 }
 
-const std::array<uint8_t, 32>& LedScreen::get()
+const std::array<uint8_t, 32>& BitStream::get()
 {
     return pixelCode_;
+}
+
+BitStream::BitStream()
+{
+    pixelCode_.fill(0b11111111);
 }
 
 }

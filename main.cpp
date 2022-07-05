@@ -1,12 +1,6 @@
-#include "code_parser.h"
+#include "file_wrapper.h"
 #include <cxxopts.hpp>
 
-enum ExitCodes
-{
-    Success = EXIT_SUCCESS,
-    InputFileError = 1,
-    UnknownInputFile,
-    UnknownDestinationPoint,
 };
 
 int main(int argc, char* argv[])
@@ -38,7 +32,7 @@ int main(int argc, char* argv[])
     }
 
     // TODO try to handle exceptions here
-    botsAndUs::CodeParser parser(userInput["file"].as<std::string>(), userInput["destination_folder"].as<std::string>());
+    xxxDisplay::FileWrapper parser(userInput["file"].as<std::string>(), userInput["destination_folder"].as<std::string>());
     parser.exert();
 
     return 0;

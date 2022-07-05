@@ -1,115 +1,84 @@
 #pragma once
 
+#include <exception>
 #include <string>
-#include "exception"
 
-namespace botsAndUs::exceptions
+namespace xxxDisplay::exceptions
 {
 
-struct InputException : public std::exception
+
+// TODO split the implementation, add comments
+struct InputFileException : public std::exception
 {
   private:
     std::string message = "An error processing input file.";
 
   public:
-    InputException(const std::string& msg)
-        : message(msg)
-    {
-    }
+    InputFileException(const std::string& msg);
 
-    InputException() = default;
+    InputFileException() = default;
 
-    virtual ~InputException() = default;
+    virtual ~InputFileException() = default;
 
-    const char* what() const throw() override
-    {
-        return message.c_str();
-    }
+    const char* what() const throw() override;
 };
 
-struct FileException : public std::exception
+struct SaveFileException : public std::exception
 {
   private:
     std::string message = "An error processing a file.";
 
   public:
-    FileException(const std::string& msg)
-        : message(msg)
-    {
-    }
+    SaveFileException(const std::string& msg);
 
-    FileException() = default;
+    SaveFileException() = default;
 
-    virtual ~FileException() = default;
+    virtual ~SaveFileException() = default;
 
-    const char* what() const throw() override
-    {
-        return message.c_str();
-    }
+    const char* what() const throw() override;
 };
 
 
-struct PngException : public std::exception
+struct PngFileException : public std::exception
 {
   private:
     std::string message = "An error processing a PNG image.";
 
   public:
-    PngException(const std::string& msg)
-        : message(msg)
-    {
-    }
+    PngFileException(const std::string& msg);
 
-    PngException() = default;
+    PngFileException() = default;
 
-    virtual ~PngException() = default;
+    virtual ~PngFileException() = default;
 
-    const char* what() const throw() override
-    {
-        return message.c_str();
-    }
+    const char* what() const throw() override;
 };
 
-struct FileDoesNotExists : public InputException
+struct FileDoesNotExists : public InputFileException
 {
-    FileDoesNotExists(const std::string& msg)
-        : InputException(msg)
-    {
-    }
+    FileDoesNotExists(const std::string& msg);
 
-    FileDoesNotExists()
-        : InputException("Could not find a requested input file.")
-    {
-    };
+    FileDoesNotExists();
 
 };
 
 
-struct UnexpectedCodeLength : public InputException
+struct UnexpectedCodeLength : public InputFileException
 {
-    UnexpectedCodeLength(const std::string& msg)
-        : InputException(msg)
-    {
-    }
+    UnexpectedCodeLength(const std::string& msg);
 
     UnexpectedCodeLength()
-        : InputException("A file contains at least one code that is of an unexpected length.")
+        : InputFileException("A file contains at least one code that is of an unexpected length.")
     {
     };
 
 };
 
-struct UnexpectedCharacter : public InputException
+struct UnexpectedCharacter : public InputFileException
 {
-    UnexpectedCharacter(const std::string& msg)
-        : InputException(msg)
-    {
-    }
+    UnexpectedCharacter(const std::string& msg);
 
-    UnexpectedCharacter()
-        : InputException("A file contains at least one code with a non-supported character in it.")
-    {
-    };
+    UnexpectedCharacter();
 
 };
 
