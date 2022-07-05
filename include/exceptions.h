@@ -1,84 +1,107 @@
 #pragma once
 
-#include <exception>
+#include <stdexcept>
 #include <string>
+
 
 namespace xxxDisplay::exceptions
 {
 
-
-// TODO split the implementation, add comments
-struct InputFileException : public std::exception
+/**
+ * @brief It is a generic base exception class for all expected exceptions thrown by the xxxDisplay namespace
+ */
+struct XxxDisplayException : public std::exception
 {
   private:
-    std::string message = "An error processing input file.";
+    std::string message; //! A message describing the exception
 
   public:
-    InputFileException(const std::string& msg);
+    /**
+     * @param msg A message describing the exception
+     */
+    explicit XxxDisplayException(std::string msg);
 
-    InputFileException() = default;
+    ~XxxDisplayException() override = default;
 
-    virtual ~InputFileException() = default;
-
-    const char* what() const throw() override;
+    /**
+     * @brief Describe the encountered exception
+     * @return A message describing the exception
+     */
+    [[nodiscard]] const char* what() const noexcept override;
 };
 
-struct SaveFileException : public std::exception
+/**
+ * @brief An exception that is thrown when an error in an input file has been detected
+ */
+struct InputFileException : public XxxDisplayException
 {
-  private:
-    std::string message = "An error processing a file.";
 
   public:
-    SaveFileException(const std::string& msg);
+    /**
+     * @param msg A message describing the exception
+     */
+    explicit InputFileException(std::string msg);
 
-    SaveFileException() = default;
+    ~InputFileException() override = default;
 
-    virtual ~SaveFileException() = default;
-
-    const char* what() const throw() override;
 };
 
-
-struct PngFileException : public std::exception
+/**
+ * @brief An exception that is thrown when an error in opening a file for saving has happened
+ */
+struct SaveFileException : public XxxDisplayException
 {
-  private:
-    std::string message = "An error processing a PNG image.";
+  public:
+    /**
+     * @param msg A message describing the exception
+     */
+    explicit SaveFileException(std::string msg);
+
+    ~SaveFileException() override = default;
+};
+
+/**
+ * @brief An exception that is thrown when an error in a libpng library has been encountered
+ */
+struct LibpngException : public XxxDisplayException
+{
+  public:
+    /**
+     * @param msg A message describing the exception
+     */
+    explicit LibpngException(std::string msg);
+
+    ~LibpngException() override = default;
+};
+
+/**
+ * @brief An exception that is thrown when an method received an argument of an unexpected length
+ */
+struct UnexpectedLength : public XxxDisplayException
+{
+  public:
+    /**
+     * @param msg A message describing the exception
+     */
+    explicit UnexpectedLength(std::string msg);
+
+    ~UnexpectedLength() override = default;
+
+};
+
+/**
+ * @brief An exception that is thrown when an method received a string with an unexpected/unsupported character in it
+ */
+struct UnexpectedCharacter : public XxxDisplayException
+{
 
   public:
-    PngFileException(const std::string& msg);
+    /**
+     * @param msg A message describing the exception
+     */
+    explicit UnexpectedCharacter(std::string msg);
 
-    PngFileException() = default;
-
-    virtual ~PngFileException() = default;
-
-    const char* what() const throw() override;
-};
-
-struct FileDoesNotExists : public InputFileException
-{
-    FileDoesNotExists(const std::string& msg);
-
-    FileDoesNotExists();
-
-};
-
-
-struct UnexpectedCodeLength : public InputFileException
-{
-    UnexpectedCodeLength(const std::string& msg);
-
-    UnexpectedCodeLength()
-        : InputFileException("A file contains at least one code that is of an unexpected length.")
-    {
-    };
-
-};
-
-struct UnexpectedCharacter : public InputFileException
-{
-    UnexpectedCharacter(const std::string& msg);
-
-    UnexpectedCharacter();
+    ~UnexpectedCharacter() override = default;
 
 };
 
