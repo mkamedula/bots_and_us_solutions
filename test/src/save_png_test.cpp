@@ -10,6 +10,9 @@
 namespace xxxDisplay
 {
 
+/**
+ * A helper struct to compare the PNG files
+ */
 struct PngData
 {
     uint32_t height;
@@ -17,18 +20,13 @@ struct PngData
     uint32_t bits_number;
     unsigned char color_type;
     unsigned char  bit_depth;
-    int  number_of_passes;
-    unsigned char  interlace_type;
-    unsigned char  compression_type;
-    unsigned char  filter_type;
+
     std::vector<std::vector<unsigned char>> pixels;
 //
     friend bool operator==(PngData const& l, PngData const& r) noexcept
     {
         return l.height == r.height && l.width == r.width && l.color_type == r.color_type &&
-               l.bit_depth == r.bit_depth && l.number_of_passes == r.number_of_passes &&
-               l.interlace_type == r.interlace_type && l.compression_type == r.compression_type &&
-               l.filter_type == r.filter_type && l.pixels == r.pixels;
+               l.bit_depth == r.bit_depth && l.pixels == r.pixels;
     }
 };
 
@@ -83,10 +81,6 @@ PngData readPngImage(const std::string& file_name)
     pngData.height = png_get_image_height(png_ptr, info_ptr);
     pngData.color_type = png_get_color_type(png_ptr, info_ptr);
     pngData.bit_depth = png_get_bit_depth(png_ptr, info_ptr);
-    pngData.number_of_passes = png_set_interlace_handling(png_ptr);
-    pngData.interlace_type = png_get_interlace_type(png_ptr, info_ptr);
-    pngData.compression_type = png_get_compression_type(png_ptr, info_ptr);
-    pngData.filter_type = png_get_filter_type(png_ptr, info_ptr);
 
     png_read_update_info(png_ptr, info_ptr);
 
@@ -114,7 +108,7 @@ PngData readPngImage(const std::string& file_name)
         free(row_pointers[y]);
     }
 
-     free(row_pointers);
+    free(row_pointers);
     fclose(fp);
 
     return pngData;
@@ -139,39 +133,7 @@ auto getSolution()
     return test;
 }
 
-void printComparison(const std::string& file_name_1, const std::string& file_name_2)
-{
-    auto data1 = readPngImage(file_name_1);
-    auto data2 = readPngImage(file_name_2);
-
-    if (data1.height != data2.height)
-    {
-        std::cout << "Height don't match " << data1.height << ", " << data2.height << std::endl;
-    }
-
-    if (data1.width != data2.width)
-    {
-        std::cout << "Width don't match " << data1.width << ", " << data2.width << std::endl;
-    }
-
-    if (data1.bit_depth != data2.bit_depth)
-    {
-        std::cout << "Bit depth don't match " << data1.bit_depth << ", " << data2.bit_depth << std::endl;
-    }
-
-    for (uint32_t i = 0; i < data1.height; i++)
-    {
-        for (uint32_t k = 0; k < data1.bits_number; k++)
-        {
-            if (data1.pixels[i][k] != data2.pixels[i][k])
-            {
-                std::cout << "pixel mismatch " << i << ", " << k << ": " << std::bitset<8>(data1.pixels[i][k]) << "\t" << std::bitset<8>(data2.pixels[i][k]) << std::endl;
-            }
-        }
-    }
-
-}
-
+// TODO add one more test file, test with non 4-digit case
 SCENARIO("A valid stream of pixels is provided to the function")
 {
     GIVEN("A valid pixel stream")
@@ -182,11 +144,12 @@ SCENARIO("A valid stream of pixels is provided to the function")
         THEN("A correct png file is being saved.")
         {
             REQUIRE_NOTHROW(savePngRowImage(stream, "test.png"));
-            printComparison("test.png", file); // TODO remove
             REQUIRE(readPngImage("test.png") == readPngImage(file));
             // TODO remove the test file (?)
         }
     }
 }
+
+// TODO what are the file conditions here?
 
 }
