@@ -1,7 +1,7 @@
 #pragma once
 
-#include "exceptions.h"
 #include "bit_stream.h"
+#include "exceptions.h"
 
 #include <fstream>
 #include <string_view>
@@ -28,7 +28,7 @@ class FileWrapper
      * @param file name of the file that contains the codes (including path to file)
      * @param save_folder where to save generated png files (including path to folder)
      */
-    FileWrapper(const std::string& file, const std::string& save_folder);
+    FileWrapper(const std::string& file, std::string  save_folder);
 
     /**
      * @brief Executed the PNG image generation routine for all codes.
