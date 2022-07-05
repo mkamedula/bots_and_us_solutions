@@ -48,7 +48,7 @@ PngData readPngImage(const std::string& file_name)
     FILE* fp = fopen(file_name.c_str(), "rb");
     if (!fp)
     {
-        std::cout << "[read_png_file] File %s could not be opened for reading" << std::endl;
+        throw exceptions::InputFileException("File " + file_name + " could not be opened for reading.");
     }
 
     [[maybe_unused]] auto t = fread(header, 1, 8, fp);
@@ -58,22 +58,19 @@ PngData readPngImage(const std::string& file_name)
 
     if (!png_ptr)
     {
-        std::cout << "[read_png_file] png_create_read_struct failed" << std::endl;
-        return pngData;
+        throw exceptions::LibpngException("png_create_read_struct failed");
     }
 
     info_ptr = png_create_info_struct(png_ptr);
     if (!info_ptr)
     {
-        std::cout << "[read_png_file] png_create_info_struct failed" << std::endl;
-        return pngData;
+        throw exceptions::LibpngException("png_create_info_struct failed");
     }
 
 
     if (setjmp(png_jmpbuf(png_ptr)))
     {
-        std::cout << "[read_png_file] Error during init_io" << std::endl;
-        return pngData;
+        throw exceptions::LibpngException("Error during init_io");
     }
 
 
@@ -97,8 +94,7 @@ PngData readPngImage(const std::string& file_name)
     /* read file */
     if (setjmp(png_jmpbuf(png_ptr)))
     {
-        std::cout << "[read_png_file] Error during read_image" << std::endl;
-        return pngData;
+        throw exceptions::LibpngException("Error during read_image");
     }
 
     row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * pngData.height);
@@ -117,6 +113,7 @@ PngData readPngImage(const std::string& file_name)
         pngData.pixels.push_back(test);
         free(row_pointers[y]);
     }
+
      free(row_pointers);
     fclose(fp);
 

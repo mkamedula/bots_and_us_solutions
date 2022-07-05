@@ -8,13 +8,13 @@ SCENARIO("The checksum is being computed")
 {
     GIVEN("3-digit number")
     {
-        REQUIRE(getMod97("877").value() == 4);
+        REQUIRE(getMod97("877") == 4);
     }
 
     GIVEN("4-digit number")
     {
-        REQUIRE(getMod97("7331").value() == 56);
-        REQUIRE(getMod97("9564").value() == 58);
+        REQUIRE(getMod97("7331") == 56);
+        REQUIRE(getMod97("9564") == 58);
     }
 }
 
@@ -22,22 +22,22 @@ SCENARIO("An invalid string is provided to the checksum")
 {
     GIVEN("A negative number")
     {
-        REQUIRE(getMod97("-4586") == std::nullopt);
+        REQUIRE_THROWS_AS(getMod97("-4586"), exceptions::UnexpectedCharacter);
     }
 
     GIVEN("A non-numerical string")
     {
-        REQUIRE(getMod97("A text") == std::nullopt);
+        REQUIRE_THROWS_AS(getMod97("A text"), exceptions::UnexpectedCharacter);
     }
 
     GIVEN("A partial numeric string")
     {
-        REQUIRE(getMod97("5f48") == std::nullopt);
+        REQUIRE_THROWS_AS(getMod97("5f48"), exceptions::UnexpectedCharacter);
     }
 
     GIVEN("A long input with more than 32-bits")
     {
-        REQUIRE(getMod97("77899458687") == std::nullopt);
+        REQUIRE_THROWS_AS(getMod97("77899458687"), exceptions::UnexpectedLength);
     }
 }
 }

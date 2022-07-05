@@ -1,60 +1,45 @@
 #include "exceptions.h"
 
+#include <utility>
+
 namespace xxxDisplay::exceptions
 {
 
-InputFileException::InputFileException(const std::string& msg)
-    : message(msg)
+XxxDisplayException::XxxDisplayException(std::string msg): message(msg)
 {
+
 }
 
-const char* InputFileException::what() const throw()
+const char* XxxDisplayException::what() const noexcept
 {
     return message.c_str();
 }
 
-SaveFileException::SaveFileException(const std::string& msg)
-    : message(msg)
+
+InputFileException::InputFileException(std::string msg)
+    : XxxDisplayException(std::move(msg))
 {
 }
 
-const char* SaveFileException::what() const throw()
-{
-    return message.c_str();
-}
-
-PngFileException::PngFileException(const std::string& msg)
-    : message(msg)
+SaveFileException::SaveFileException(std::string msg)
+    : XxxDisplayException(std::move(msg))
 {
 }
 
-const char* PngFileException::what() const throw()
-{
-    return message.c_str();
-}
-
-FileDoesNotExists::FileDoesNotExists(const std::string& msg)
-    : InputFileException(msg)
+LibpngException::LibpngException(std::string msg)
+    : XxxDisplayException(std::move(msg))
 {
 }
 
-FileDoesNotExists::FileDoesNotExists()
-    : InputFileException("Could not find a requested input file.")
+UnexpectedLength::UnexpectedLength(std::string msg)
+    : XxxDisplayException(std::move(msg))
 {
 }
 
-UnexpectedCodeLength::UnexpectedCodeLength(const std::string& msg)
-    : InputFileException(msg)
+UnexpectedCharacter::UnexpectedCharacter(std::string msg)
+    : XxxDisplayException(std::move(msg))
 {
 }
 
-UnexpectedCharacter::UnexpectedCharacter(const std::string& msg)
-    : InputFileException(msg)
-{
-}
 
-UnexpectedCharacter::UnexpectedCharacter()
-    : InputFileException("A file contains at least one code with a non-supported character in it.")
-{
-}
 }

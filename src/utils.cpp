@@ -4,15 +4,19 @@
 
 namespace xxxDisplay
 {
-std::optional<uint32_t> getMod97(const std::string& code)
+
+uint32_t getMod97(const std::string& code)
 {
+    if (code.empty())
+        return 0;
 
     if (std::any_of(code.begin(), code.end(), [](const auto& value)
     {
         return !std::isdigit(value);
     }))
     {
-        return std::nullopt;
+        throw exceptions::UnexpectedCharacter(
+            "getMod97: Received unexpected character in a string. Only numerical values are supported at the moment.");
     }
 
     try
@@ -21,14 +25,10 @@ std::optional<uint32_t> getMod97(const std::string& code)
     }
     catch (std::out_of_range& e)
     {
-        /** not implemented: support for string  over the 32-bit limit has not been implemented yet. */
-        return std::nullopt;
+        throw exceptions::UnexpectedLength("getMod97: Received too long input argument. "
+                                           "Currently maximum 9-digit numbers are supported.");
     }
-    catch (std::invalid_argument& e)
-    {
-        /** TODO This should not happen, should it throw */
-        return std::nullopt;
-    }
+
 }
 
 
@@ -46,21 +46,21 @@ void savePngImp(unsigned char& data, const std::string& file_name, [[maybe_unuse
 
     if (!write_ptr)
     {
-        throw exceptions::PngFileException("png_create_write_struct failed");
+        throw exceptions::LibpngException("png_create_write_struct failed");
     }
 
     png_infop info_ptr = png_create_info_struct(write_ptr);
     if (!info_ptr)
     {
         png_destroy_write_struct(&write_ptr, (png_infopp) NULL);
-        throw exceptions::PngFileException("png_create_info_struct failed");
+        throw exceptions::LibpngException("png_create_info_struct failed");
     }
 
     if (setjmp(png_jmpbuf(write_ptr)))
     {
         png_destroy_write_struct(&write_ptr, &info_ptr);
         fclose(fp);
-        throw exceptions::PngFileException("Error during init_io");
+        throw exceptions::LibpngException("Error during init_io");
     }
 
     png_init_io(write_ptr, fp);
@@ -70,7 +70,7 @@ void savePngImp(unsigned char& data, const std::string& file_name, [[maybe_unuse
     if (setjmp(png_jmpbuf(write_ptr)))
     {
         png_destroy_write_struct(&write_ptr, (png_infopp) NULL);
-        throw exceptions::PngFileException("Error during writing header");
+        throw exceptions::LibpngException("Error during writing header");
     }
 
     png_set_IHDR(write_ptr, info_ptr, width, 1, 1, PNG_COLOR_TYPE_GRAY, PNG_INTERLACE_NONE,
@@ -83,7 +83,7 @@ void savePngImp(unsigned char& data, const std::string& file_name, [[maybe_unuse
     if (setjmp(png_jmpbuf(write_ptr)))
     {
         png_destroy_write_struct(&write_ptr, (png_infopp) NULL);
-        throw exceptions::PngFileException("Error during writing bytes");
+        throw exceptions::LibpngException("Error during writing bytes");
     }
 
     png_byte* row_pointers[1];
@@ -97,7 +97,7 @@ void savePngImp(unsigned char& data, const std::string& file_name, [[maybe_unuse
     if (setjmp(png_jmpbuf(write_ptr)))
     {
         png_destroy_write_struct(&write_ptr, (png_infopp) NULL);
-        throw exceptions::PngFileException("Error during end of write");
+        throw exceptions::LibpngException("Error during end of write");
     }
 
     png_write_end(write_ptr, NULL);
