@@ -43,7 +43,9 @@ void FileWrapper::processLine_()
     try
     {
         auto checksum = getMod97(reversed_line_);
-        display_.update(std::to_string(checksum) + line_);
+        std::stringstream ss;
+        ss << std::setw(2) << std::setfill('0') << std::to_string(checksum);
+        display_.update(ss.str() + line_);
     }
     catch (exceptions::UnexpectedLength& e)
     {
