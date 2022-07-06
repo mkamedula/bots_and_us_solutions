@@ -2,19 +2,48 @@
 
 #include <catch2/catch.hpp>
 
-namespace xxxDisplay
+namespace xxxDisplay::tests
 {
 SCENARIO("The checksum is being computed")
 {
     GIVEN("3-digit number")
     {
-        REQUIRE(getMod97("877") == 4);
+        THEN("A checksum is computed correctly")
+        {
+            REQUIRE(getMod97("877") == 4);
+        }
     }
 
     GIVEN("4-digit number")
     {
-        REQUIRE(getMod97("7331") == 56);
-        REQUIRE(getMod97("9564") == 58);
+        THEN("A checksum is computed correctly")
+        {
+            REQUIRE(getMod97("7331") == 56);
+        }
+    }
+
+    GIVEN("8-digit number")
+    {
+        THEN("A checksum is computed correctly")
+        {
+            REQUIRE(getMod97("12045678") == 24);
+        }
+    }
+
+    GIVEN("A number with one digit checksum")
+    {
+        THEN("A checksum is computed correctly")
+        {
+            REQUIRE(getMod97("3591") == 2);
+        }
+    }
+
+    GIVEN("A number with zero digit checksum")
+    {
+        THEN("A checksum is computed correctly")
+        {
+            REQUIRE(getMod97("1164") == 0);
+        }
     }
 }
 
