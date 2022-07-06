@@ -6,7 +6,7 @@ namespace xxxDisplay
 {
 
 /**
- * @brief Stores a current status of a XXX display in the bit stream form.
+ * @brief This class provides operations directly related to the xxxDisplay hardware.
  *
  * High bit - inactive segment
  * Low bit - active segment
@@ -27,6 +27,10 @@ class BitStream
     /**
      * @brief change status of the display
      * @param code 6-digit ASCII code to be displayed
+     *
+     * @throw exceptions::UnexpectedLength provided code of a wrong length, only 6-character
+     * codes are supported at the moment
+     * @throw exceptions::UnexpectedCharacter received unexpected character value. Only numerical values are supported.
      */
     void update(std::string_view code);
 
