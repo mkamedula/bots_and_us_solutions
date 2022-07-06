@@ -2,6 +2,7 @@
 #include "utils.h"
 
 #include <algorithm>
+#include <iomanip>
 #include <utility>
 
 namespace xxxDisplay

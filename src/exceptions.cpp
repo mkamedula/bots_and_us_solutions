@@ -5,7 +5,7 @@
 namespace xxxDisplay::exceptions
 {
 
-XxxDisplayException::XxxDisplayException(std::string msg): message(msg)
+XxxDisplayException::XxxDisplayException(std::string msg): message(std::move(msg))
 {
 
 }

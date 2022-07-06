@@ -1,6 +1,7 @@
-#include "utils.h"
 #include "exceptions.h"
-#include <boost/range/adaptor/reversed.hpp>
+#include "utils.h"
+
+#include <algorithm>
 
 namespace xxxDisplay
 {
