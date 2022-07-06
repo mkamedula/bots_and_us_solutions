@@ -34,20 +34,22 @@ class BitStream
      */
     void update(std::string_view code);
 
+
+
   protected:
     /**
      * Mapping between the supported ASCII characters and XXX display character segments
      */
-    const std::unordered_map<char, int32_t> bitMap_{{'0', 0b01110111},
-                                                    {'1', 0b01000010},
-                                                    {'2', 0b10110110},
-                                                    {'3', 0b11010110},
-                                                    {'4', 0b11000011},
-                                                    {'5', 0b11010101},
-                                                    {'6', 0b11110101},
-                                                    {'7', 0b01000110},
-                                                    {'8', 0b11110111},
-                                                    {'9', 0b11010111},};
+    const std::unordered_map<char, int32_t> bitMap_{{'0', 0b10001000},
+                                                    {'1', 0b10111101},
+                                                    {'2', 0b01001001},
+                                                    {'3', 0b00101001},
+                                                    {'4', 0b00111100},
+                                                    {'5', 0b00101010},
+                                                    {'6', 0b00001010},
+                                                    {'7', 0b10111001},
+                                                    {'8', 0b00001000},
+                                                    {'9', 0b00101000},};
 
     std::array<uint8_t, 32> pixelCode_ = {}; //! A full 256-bit code for a XXX display
 
