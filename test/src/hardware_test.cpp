@@ -1,4 +1,4 @@
-#include "bit_stream.h"
+#include "hardware.h"
 #include <catch2/catch.hpp>
 #include <iostream>
 

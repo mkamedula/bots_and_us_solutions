@@ -16,38 +16,33 @@ namespace xxxDisplay
  * @return Computed checksum
  *
  * @throw exceptions::UnexpectedLength Received too long value, only up to 9-digits numbers are supported at the moment.
- * @throw exceptions::UnexpectedCharacter Received unsupported character in the input string. Only numeric characters are supported.
+ * @throw exceptions::UnexpectedCharacter Received unsupported character in the input string. Only numeric
+ * characters are supported.
  */
 uint32_t getMod97(const std::string& code);
 
 /**
- * @brief Save a 1-bit depth, greyscale PNG image from provided pixel data.
- * A generate image will have a size 1 by 8*data.size.
+ * Save a PNG image from provided 1-D pixel data. Created image will be 1-bit depth, greyscale and 1-bit high.
+ * Each entry in the container will be cast to unsigned char, and so only first byte of data is significant.
+ * Later bytes in the provided data will be ignored.
  *
- * Save a PNG image from provided pixel data. Created image will be 1-bit depth, greyscale and 1-bit high.
- * It will have a width equal to eight times the size of the container.
+ * The created image will have a width equal to eight times the size of the container minus value of ignore_bits
+ * parameter. The ignore_bits parameter allow to generate images of any length. The value of ignore_bits should
+ * be smaller than 8*data.size().
  *
  * @tparam Container a random access ordered data structure that holds a 1-byte of data per element
- * @param data pointer to the container with the pixel data
- * @param file_name name of the generated PNG image (with path)
+ * @param data 1-D container with pixel data
+ * @param file_name name of the generated PNG image (with path). The parent directory must exists or
+ * SaveFileException will be thrown.
+ * @param ignored_bits number of bits to be ignored from the end of the stream. This value should be smaller than
+ * 8*data.size().
  *
- * @throw SaveFileException Could not open the file for saving.
+ * @throw SaveFileException Could not open the file for saving or and empty image has been requested.
  * @throw LibpngException Encounter an internal error from libpng.
+ *
  */
 template<typename Container>
-void savePngRowImage(const Container& data, [[maybe_unused]] const std::string& file_name);
-
-/**
- * @brief Save a 1-bit depth, greyscale PNG image from provided pixel data.
- *
- * @param data pointer to the container with the pixel data
- * @param file_name name of the generated PNG image (with path)
- * @param width a width of the image to be saved in pixels
- *
- * @throw SaveFileException Could not open the file for saving.
- * @throw LibpngException Encounter an internal error from libpng.
- */
-void savePngImp(unsigned char& data, const std::string& file_name, size_t width);
+void save1DPng(const Container& data, const std::string& file_name, size_t ignored_bits);
 
 }
 

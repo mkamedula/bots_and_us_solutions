@@ -1,4 +1,4 @@
-#include "file_wrapper.h"
+#include "business_logic.h"
 #include "support_methods.h"
 
 #include <catch2/catch.hpp>
@@ -30,7 +30,7 @@ SCENARIO("Received file is well-formatted")
             REQUIRE_NOTHROW(parser.exert());
         }
 
-        std::string test_id = GENERATE("2553.png", "0129.png", "3140.png", "6718.png", "3591.png", "1164.png");
+        std::string test_id = GENERATE("2553.png", "0129.png", "3140.png", "6718.png", "1953.png", "4611.png");
 
         THEN("The correct PNG files are generated")
         {

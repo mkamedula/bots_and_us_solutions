@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+#include <iostream>
+#include <bitset>
+
 namespace xxxDisplay::tests
 {
 /**
@@ -13,18 +16,14 @@ struct PngData
 {
 
     unsigned char bit_depth;
-    uint32_t bits_number;
+    uint32_t bytes;
     unsigned char color_type;
     uint32_t height;
     uint32_t width;
 
-    std::vector <std::vector<unsigned char>> pixels;
+    std::vector<std::vector<unsigned char>> pixels;
 
-    friend bool operator==(PngData const& l, PngData const& r) noexcept
-    {
-        return l.height == r.height && l.width == r.width && l.color_type == r.color_type &&
-               l.bit_depth == r.bit_depth && l.pixels == r.pixels;
-    }
+    friend bool operator==(PngData const& l, PngData const& r) noexcept;
 };
 
 PngData readPngImage(const std::string& file_name);

@@ -1,12 +1,29 @@
 #include "exceptions.h"
-#include "bit_stream.h"
+#include "hardware.h"
+#include "utils.h"
 
 #include <algorithm>
 
 namespace xxxDisplay
 {
 
-void Hardware::update(std::string_view code)
+Hardware::Hardware()
+{
+    pixelCode_.fill(0b11111111);
+}
+
+const std::array<uint8_t, 32>& Hardware::get()
+{
+    return pixelCode_;
+}
+
+void Hardware::save(const std::string& file_name)
+{
+    save1DPng(get(), file_name, 0);
+}
+
+
+void Hardware::update(const std::string& code)
 {
     if (code.size() != 6)
     {
@@ -29,14 +46,5 @@ void Hardware::update(std::string_view code)
     }
 }
 
-const std::array<uint8_t, 32>& Hardware::get()
-{
-    return pixelCode_;
-}
-
-Hardware::Hardware()
-{
-    pixelCode_.fill(0b11111111);
-}
 
 }

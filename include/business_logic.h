@@ -1,11 +1,10 @@
 #pragma once
 
-#include "hardware.h"
 #include "exceptions.h"
 #include "hardware.h"
 
 #include <fstream>
-#include <string_view>
+#include <string>
 
 
 namespace xxxDisplay

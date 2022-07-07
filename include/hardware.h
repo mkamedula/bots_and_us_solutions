@@ -6,7 +6,7 @@ namespace xxxDisplay
 {
 
 /**
- * This class provides operations directly related to the xxxDisplay hardware providing a translation from the
+ * This class provides operations directly related to the xxxDisplay hardware. It provides a translation from the
  * output of the business layer to the bit and pixel streams understandable by the hardware.
  * It holds a mapping between the higher-level human readable codes and internal hardware logic.
  *
@@ -29,20 +29,33 @@ class Hardware
 
     /**
      * @brief Update the bit stream of the display represented by this instance based on the human-readable string value.
-     * @param code 6-digit ASCII code to be displayed
+     * @param code 6-digit ASCII code to be displayed containing only supported characters (see bitMap_)
      *
-     * @throw exceptions::UnexpectedLength provided code of a wrong length, only 6-character
-     * codes are supported at the moment
-     * @throw exceptions::UnexpectedCharacter received unexpected character value. Only numerical values are supported.
+     * @throw exceptions::UnexpectedLength received a code of a wrong length, only 6-character codes are supported.
+     * @throw exceptions::UnexpectedCharacter received unexpected character value. See bitMap_ filed for list
+     * of supported characters.
      */
-    void update(std::string_view code);
+    void update(const std::string& code);
 
+    /**
+     * @brief Save current status of the display to the png file.
+     * @param file_name name of the PNG file that will be created. The parent directory must exist or
+     * a exceptions::SaveFileException will be throw and PNG images will not be created
+     *
+     * @throw LibpngException Encounter an internal error from a PNG library.
+     * @throw SaveFileException Could not open the file for saving. Most likely the parent directory
+     * does not exists or the application does not have sufficient privileges.
+     *
+     * @warning If the previous file with a given name exists in a destination directory it will be overwritten
+     * by this method.
+     */
+    void save(const std::string& file_name);
 
-  protected:
+  private:
     /**
      * Mapping between the supported ASCII characters and XXX display character segments
      */
-    const std::unordered_map<char, int32_t> bitMap_{{'0', 0b10001000},
+    const std::unordered_map<char, uint8_t> bitMap_{{'0', 0b10001000},
                                                     {'1', 0b10111101},
                                                     {'2', 0b01001001},
                                                     {'3', 0b00101001},
