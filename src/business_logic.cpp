@@ -43,9 +43,9 @@ void BusinessLogic::processLine_()
     try
     {
         auto checksum = getMod97(reversed_line_);
-        std::stringstream ss;
-        ss << std::setw(2) << std::setfill('0') << std::to_string(checksum);
-        display_.update(ss.str() + line_);
+        checksum_stream_.str("");
+        checksum_stream_ << std::setw(2) << std::setfill('0') << std::to_string(checksum);
+        display_.update(checksum_stream_.str() + line_);
     }
     catch (exceptions::UnexpectedLength& e)
     {

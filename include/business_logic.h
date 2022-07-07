@@ -61,7 +61,7 @@ class BusinessLogic
      */
     void processLine_();
 
-    xxxDisplay::Hardware display_; //! Generates a required bit stream for a given code
+    std::stringstream checksum_stream_; //! Auxiliary variable to fill the single digit checksum with leading zeros
     std::ifstream input_; //! Hold stream of an input file
     std::string line_; //! Contents of the last read line
     std::string reversed_line_; //! Auxiliary string to hold the reversed string for the checksum generation
