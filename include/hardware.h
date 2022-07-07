@@ -6,26 +6,29 @@ namespace xxxDisplay
 {
 
 /**
- * @brief This class provides operations directly related to the xxxDisplay hardware.
+ * This class provides operations directly related to the xxxDisplay hardware providing a translation from the
+ * output of the business layer to the bit and pixel streams understandable by the hardware.
+ * It holds a mapping between the higher-level human readable codes and internal hardware logic.
  *
  * High bit - inactive segment
  * Low bit - active segment
  */
-class BitStream
+class Hardware
 {
 
   public:
 
-    BitStream();
+    Hardware();
 
     /**
-     * @brief Get current status of the display
+     * @brief Get current status of the display as a bit stream where active segments are represented by the low
+     * bits and inactive segments are represented by the high bits.
      * @return current status of the display
      */
     const std::array<uint8_t, 32>& get();
 
     /**
-     * @brief change status of the display
+     * @brief Update the bit stream of the display represented by this instance based on the human-readable string value.
      * @param code 6-digit ASCII code to be displayed
      *
      * @throw exceptions::UnexpectedLength provided code of a wrong length, only 6-character
@@ -33,7 +36,6 @@ class BitStream
      * @throw exceptions::UnexpectedCharacter received unexpected character value. Only numerical values are supported.
      */
     void update(std::string_view code);
-
 
 
   protected:

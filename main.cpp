@@ -1,4 +1,4 @@
-#include "file_wrapper.h"
+#include "business_logic.h"
 
 #include <cxxopts.hpp>
 #include <iomanip>
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        xxxDisplay::FileWrapper parser(userInput["file"].as<std::string>(),
+        xxxDisplay::BusinessLogic parser(userInput["file"].as<std::string>(),
                                        userInput["destination_folder"].as<std::string>());
         parser.exert();
     }

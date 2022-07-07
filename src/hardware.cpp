@@ -6,7 +6,7 @@
 namespace xxxDisplay
 {
 
-void BitStream::update(std::string_view code)
+void Hardware::update(std::string_view code)
 {
     if (code.size() != 6)
     {
@@ -29,12 +29,12 @@ void BitStream::update(std::string_view code)
     }
 }
 
-const std::array<uint8_t, 32>& BitStream::get()
+const std::array<uint8_t, 32>& Hardware::get()
 {
     return pixelCode_;
 }
 
-BitStream::BitStream()
+Hardware::Hardware()
 {
     pixelCode_.fill(0b11111111);
 }

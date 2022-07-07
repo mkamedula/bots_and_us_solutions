@@ -1,4 +1,4 @@
-#include "file_wrapper.h"
+#include "business_logic.h"
 #include "utils.h"
 
 #include <algorithm>
@@ -8,7 +8,7 @@
 namespace xxxDisplay
 {
 
-FileWrapper::FileWrapper(const std::string& file, std::string save_folder)
+BusinessLogic::BusinessLogic(const std::string& file, std::string save_folder)
     : save_folder_(std::move(save_folder))
 {
     input_.open(file);
@@ -21,7 +21,7 @@ FileWrapper::FileWrapper(const std::string& file, std::string save_folder)
     reversed_line_.resize(4);
 }
 
-void FileWrapper::exert()
+void BusinessLogic::exert()
 {
     while (input_ >> line_)
     {
@@ -29,7 +29,7 @@ void FileWrapper::exert()
     }
 }
 
-void FileWrapper::processLine_()
+void BusinessLogic::processLine_()
 {
     if (line_.size() != 4)
     {
@@ -58,7 +58,7 @@ void FileWrapper::processLine_()
             std::string("FileWrapper: ") + e.what());
     }
 
-    savePngRowImage(display_.get(), save_folder_ + "/" + line_ + ".png");
+    display_.save(save_folder_ + "/" + line_ + ".png");
 }
 
 } // namespace botsAndUs

@@ -31,7 +31,7 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
                                     0b00111100})}));
 
 
-        BitStream screen;
+        Hardware screen;
 
         THEN("The pixel code is generated correctly")
         {
@@ -57,7 +57,7 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
 
 SCENARIO("An invalid code has been provided to the pixel generator")
 {
-    BitStream screen;
+    Hardware screen;
     screen.update("920834");
     auto init_array = screen.get();
 

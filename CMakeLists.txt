@@ -11,9 +11,9 @@ find_package(cxxopts CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 find_package(spdlog CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 
 add_library(${CMAKE_PROJECT_NAME}_lib
-        src/bit_stream.cpp
+        src/hardware.cpp
         src/exceptions.cpp
-        src/file_wrapper.cpp
+        src/business_logic.cpp
         src/utils.cpp
         )
 
@@ -96,8 +96,9 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
     add_executable(${CMAKE_PROJECT_NAME}_tests
             test/main_test.cpp
+            test/src/business_logic_test.cpp
             test/src/checksum_test.cpp
-            test/src/file_wrapper_tests.cpp
+            test/src/hardware_test.cpp
             test/src/bit_stream_test.cpp
             test/src/save_png_test.cpp
             test/src/support_methods.cpp
@@ -115,7 +116,7 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
     include(Catch)
     catch_discover_tests(${CMAKE_PROJECT_NAME}_tests)
-
+#
 #    add_custom_command(
 #            TARGET ${CMAKE_PROJECT_NAME}_tests
 #            COMMENT "Run tests"
