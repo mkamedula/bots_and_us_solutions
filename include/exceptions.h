@@ -8,23 +8,23 @@ namespace xxxDisplay::exceptions
 {
 
 /**
- * @brief It is a generic base exception class for all expected exceptions thrown by the xxxDisplay namespace
+ * It is a generic base exception class for all expected exceptions thrown by the xxxDisplay namespace
  */
 struct XxxDisplayException : public std::exception
 {
   private:
-    std::string message; //! A message describing the exception
+    std::string message; //! A message describing an error
 
   public:
     /**
-     * @param msg A message describing the exception
+     * @param msg A message describing an error
      */
     explicit XxxDisplayException(std::string msg);
 
     ~XxxDisplayException() override = default;
 
     /**
-     * @brief Describe the encountered exception
+     * @brief Provide a message describing the encountered issue
      * @return A message describing the exception
      */
     [[nodiscard]] const char* what() const noexcept override;
@@ -38,7 +38,7 @@ struct InputFileException : public XxxDisplayException
 
   public:
     /**
-     * @param msg A message describing the exception
+     * @param msg A message describing an error
      */
     explicit InputFileException(std::string msg);
 
@@ -47,14 +47,15 @@ struct InputFileException : public XxxDisplayException
 };
 
 /**
- * @brief An exception that is thrown when an error in opening a file for saving has happened
+ * @brief An exception that is thrown when an error when opening/creating a file with write permission has
+ * been encountered
  */
 struct SaveFileException : public XxxDisplayException
 {
   public:
     /**
-     * @param msg A message describing the exception
-     */
+    * @param msg A message describing an error
+    */
     explicit SaveFileException(std::string msg);
 
     ~SaveFileException() override = default;
@@ -67,7 +68,7 @@ struct LibpngException : public XxxDisplayException
 {
   public:
     /**
-     * @param msg A message describing the exception
+     * @param msg A message describing an error
      */
     explicit LibpngException(std::string msg);
 
@@ -81,7 +82,7 @@ struct UnexpectedLength : public XxxDisplayException
 {
   public:
     /**
-     * @param msg A message describing the exception
+     * @param msg A message describing an error
      */
     explicit UnexpectedLength(std::string msg);
 
@@ -97,7 +98,7 @@ struct UnexpectedCharacter : public XxxDisplayException
 
   public:
     /**
-     * @param msg A message describing the exception
+     * @param msg A message describing an error
      */
     explicit UnexpectedCharacter(std::string msg);
 
