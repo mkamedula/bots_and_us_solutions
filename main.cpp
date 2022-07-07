@@ -6,7 +6,9 @@
 #include <spdlog/spdlog.h>
 
 
-// Map all exception to the exit codes
+/**
+ * Map all exception to the exit codes
+ */
 enum ExitCodes
 {
     SUCCESS = EXIT_SUCCESS,
@@ -39,13 +41,13 @@ int main(int argc, char* argv[])
     logger->info("Start the Xxx Display Code Parser Application");
 
     // change log pattern
-    logger->set_pattern("[%H:%M:%S %z] [%n] [%^---%L---%$] [thread %t] %v");
+    logger->set_pattern("[%H:%M:%S %z] [%^---%L---%$] %v");
 
 
-    cxxopts::Options options("Serial manip com app");
+    cxxopts::Options options("XXX Display Code Parser");
     options.add_options()("f,file", "Name of the file to be processed including the path",
                           cxxopts::value<std::string>());
-    options.add_options()("d,destination_folder", "directory where the output .png files will be loaded",
+    options.add_options()("d,destination_directory", "directory where the output .png files will be saved",
                           cxxopts::value<std::string>());
     options.add_options()("h,help", "Print usage");
 
@@ -98,7 +100,7 @@ int main(int argc, char* argv[])
     }
     catch (const std::exception& ex)
     {
-        logger->critical("Program terminated due to unknown exception");
+        logger->critical(std::string("Program terminated due to unknown exception: ") + ex.what());
         return ExitCodes::UNKNOWN_EXCEPTION;
     }
 

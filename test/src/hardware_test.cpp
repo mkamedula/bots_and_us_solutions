@@ -13,7 +13,7 @@ namespace xxxDisplay::tests
 SCENARIO("A pixel code is correctly generated when a valid input code is provided.")
 {
 
-    GIVEN("A valid input code")
+    GIVEN("A valid input code and a display object")
     {
         auto [code, solution] = GENERATE(table<std::string, std::array<uint8_t, 6>>(
             {
@@ -89,17 +89,20 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
 
 SCENARIO("An invalid code has been provided to the pixel generator")
 {
-    Hardware screen;
-    screen.update("920834");
-    auto init_array = screen.get();
-
-    GIVEN("An invalid input code")
+    GIVEN("A display object with a valid state")
     {
-        auto data = GENERATE("67y895", "6", "asccd ty ", "88865556678", "o998i8");
-        THEN("The method returns false and it does not affect the original input.")
+        Hardware screen;
+        screen.update("920834");
+        auto init_array = screen.get();
+
+        WHEN("An invalid input code is send to the display")
         {
-            REQUIRE_THROWS(screen.update(data));
-            REQUIRE(screen.get() == init_array);
+            auto data = GENERATE("67y895", "6", "asccd ty ", "88865556678", " 998i8");
+            THEN("The method returns false and it the hardware state is not affected.")
+            {
+                REQUIRE_THROWS(screen.update(data));
+                REQUIRE(screen.get() == init_array);
+            }
         }
     }
 }

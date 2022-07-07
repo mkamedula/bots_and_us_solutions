@@ -4,13 +4,13 @@
 
 namespace xxxDisplay::tests
 {
-SCENARIO("The checksum is being computed")
+SCENARIO("The checksum is being requested for a valid input")
 {
-    GIVEN("3-digit number")
+    GIVEN("1-digit number")
     {
         THEN("A checksum is computed correctly")
         {
-            REQUIRE(getMod97("877") == 4);
+            REQUIRE(getMod97("5") == 5);
         }
     }
 
@@ -38,7 +38,7 @@ SCENARIO("The checksum is being computed")
         }
     }
 
-    GIVEN("A number with zero digit checksum")
+    GIVEN("A number with zero checksum")
     {
         THEN("A checksum is computed correctly")
         {
@@ -51,22 +51,34 @@ SCENARIO("An invalid string is provided to the checksum")
 {
     GIVEN("A negative number")
     {
-        REQUIRE_THROWS_AS(getMod97("-4586"), exceptions::UnexpectedCharacter);
+        THEN("The checksum throws and unexpected character exception")
+        {
+            REQUIRE_THROWS_AS(getMod97("-4586"), exceptions::UnexpectedCharacter);
+        }
     }
 
     GIVEN("A non-numerical string")
     {
-        REQUIRE_THROWS_AS(getMod97("A text"), exceptions::UnexpectedCharacter);
+        THEN("The checksum throws and unexpected character exception")
+        {
+            REQUIRE_THROWS_AS(getMod97("A text"), exceptions::UnexpectedCharacter);
+        }
     }
 
     GIVEN("A partial numeric string")
     {
-        REQUIRE_THROWS_AS(getMod97("5f48"), exceptions::UnexpectedCharacter);
+        THEN("The checksum throws and unexpected character exception")
+        {
+            REQUIRE_THROWS_AS(getMod97("5f48"), exceptions::UnexpectedCharacter);
+        }
     }
 
     GIVEN("A long input with more than 32-bits")
     {
-        REQUIRE_THROWS_AS(getMod97("77899458687"), exceptions::UnexpectedLength);
+        THEN("The checksum throws and unsupported length exception")
+        {
+            REQUIRE_THROWS_AS(getMod97("77899458687"), exceptions::UnsupportedLength);
+        }
     }
 }
 }

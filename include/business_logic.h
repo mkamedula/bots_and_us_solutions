@@ -5,6 +5,7 @@
 
 #include <fstream>
 #include <string>
+#include <sstream>
 
 
 namespace xxxDisplay
@@ -26,7 +27,6 @@ namespace xxxDisplay
  */
 class BusinessLogic
 {
-    // TODO check how it looks with DOXYGEN
   public:
     /**
      *
@@ -42,7 +42,7 @@ class BusinessLogic
      *
      * It loops over the whole file and generates the PNG images for each file.
      *
-     * @throw exceptions::InputFileException encounterd unexpected formatting in the input file
+     * @throw exceptions::InputFileException encountered unexpected formatting in the input file
      * @throw exceptions::LibpngException encountered an error in the libpng library
      * @throw exceptions::SaveFileException could not open a file for saving. Most likely the parent directory
      * does not exists or it does not have sufficient privileges.
@@ -54,7 +54,7 @@ class BusinessLogic
     /**
      * @brief It processes last read code and generates the PNG image for it
      *
-     * @throw exceptions::InputFileException encounterd unexpected formatting in the input file
+     * @throw exceptions::InputFileException encountered unexpected formatting in the input file
      * @throw exceptions::LibpngException encountered an error in the libpng library
      * @throw exceptions::SaveFileException could not open a file for saving. Most likely the parent directory
      * does not exists or it does not have sufficient privileges.
@@ -62,9 +62,11 @@ class BusinessLogic
     void processLine_();
 
     std::stringstream checksum_stream_; //! Auxiliary variable to fill the single digit checksum with leading zeros
-    std::ifstream input_; //! Hold stream of an input file
-    std::string line_; //! Contents of the last read line
-    std::string reversed_line_; //! Auxiliary string to hold the reversed string for the checksum generation
-    std::string save_folder_; //! directory where the generated png files are saved (including path to folder)
+    xxxDisplay::Hardware display_; //! Display abstraction that translates the input code to hardware bit stream and pixels
+    std::ifstream input_; //! An input file
+    std::string line_; //! Contents of the last line read
+    std::string reversed_line_; //! Auxiliary variable to hold the reversed string for the checksum generation
+    std::string save_directory_; //! directory where the generated png files are saved (including path to directory)
+
 };
 }
