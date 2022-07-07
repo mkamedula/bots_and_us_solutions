@@ -1,6 +1,7 @@
 #include "exceptions.h"
 #include "support_methods.h"
 
+#include <bitset>
 #include <cmath>
 #include <filesystem>
 #include <png.h>
@@ -61,7 +62,7 @@ PngData readPngImage(const std::string& file_name)
         throw exceptions::LibpngException("Error during read_image");
     }
 
-    png_bytep* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * pngData.height);
+    auto* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * pngData.height);
 
     for (uint32_t y = 0; y < pngData.height; y++)
     {
@@ -98,31 +99,42 @@ void removePngFiles(const std::string& directory)
 
 bool operator==(const PngData& l, const PngData& r) noexcept
 {
+    return l.height == r.height && l.width == r.width && l.color_type == r.color_type &&
+        l.bit_depth == r.bit_depth && l.pixels == r.pixels;
+}
 
-    if (l.height != r.height || l.width != r.width || l.color_type != r.color_type ||
-        l.bit_depth != r.bit_depth)
+std::string printComparison(const std::string& file_name_1, const std::string& file_name_2)
+{
+    auto data1 = readPngImage(file_name_1);
+    auto data2 = readPngImage(file_name_2);
+
+    if (data1.height != data2.height)
     {
-        return false;
+        return "Height don't match: " + std::to_string(data1.height) + ", " + std::to_string(data2.height);
     }
 
-
-    for (size_t i = 0; i < l.height; i++)
+    if (data1.width != data2.width)
     {
-        if (!std::equal(l.pixels[i].begin(), l.pixels[i].end()-1, r.pixels[i].begin()))
-        {
-            return false;
-        }
+        return "Width don't match " + std::to_string(data1.width) + ", " + std::to_string(data2.width);
+    }
 
-        // Only check the last byte for the relevant bits
-        auto l_masked = (l.pixels[i].back() >> (8 - l.width / 8) ) & ((1 << l.width / 8) - 1);
-        auto r_masked = (r.pixels[i].back() >> (8 - r.width / 8) ) & ((1 << r.width / 8) - 1);
+    if (data1.bit_depth != data2.bit_depth)
+    {
+        return "Bit depth don't match " + std::to_string(data1.bit_depth) + ", " + std::to_string(data2.bit_depth);
+    }
 
-        if (l_masked != r_masked)
+    for (uint32_t i = 0; i < data1.height; i++)
+    {
+        for (uint32_t k = 0; k < data1.bytes; k++)
         {
-            return false;
+            if (data1.pixels[i][k] != data2.pixels[i][k])
+            {
+                return "pixel mismatch " + std::to_string(i) + ", " + std::to_string(k) + ": " + std::bitset<8>(data1.pixels[i][k]).to_string()
+                       + "\t" + std::bitset<8>(data2.pixels[i][k]).to_string();
+            }
         }
     }
 
-    return true;
+    return "Both images match";
 }
 }

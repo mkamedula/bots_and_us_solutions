@@ -1,11 +1,9 @@
 #pragma once
 
 #include <cstdint>
+#include <filesystem>
 #include <string>
 #include <vector>
-
-#include <iostream>
-#include <bitset>
 
 namespace xxxDisplay::tests
 {
@@ -15,19 +13,59 @@ namespace xxxDisplay::tests
 struct PngData
 {
 
-    unsigned char bit_depth;
-    uint32_t bytes;
-    unsigned char color_type;
-    uint32_t height;
-    uint32_t width;
+    unsigned char bit_depth; //! Bit depth of the image
+    uint32_t bytes; //! number of significant bytes in each row of the image
+    unsigned char color_type; //! Color type of the image
+    uint32_t height; //! height of the image in pixels
+    uint32_t width; //! width of the image in pixels
 
     std::vector<std::vector<unsigned char>> pixels;
 
     friend bool operator==(PngData const& l, PngData const& r) noexcept;
 };
 
+/**
+ * Read a PNG image from provided file
+ *
+ * @param file_name which image should be loaded
+ * @return A struct describing the PNG image
+ */
 PngData readPngImage(const std::string& file_name);
 
-void removePngFiles(const std::string& folder);
+/**
+ * Remove PNG images from a given directory. This method is used to clean the directory after the tests has been
+ * performed to avoid and residual files on the next test runs.
+ *
+ * @param directory A directory that should be cleaned.
+ */
+void removePngFiles(const std::string& directory);
+
+/**
+ * Print human readable comparison of discrepancies found between the PNG files. Only first difference found will
+ * be reported.
+ *
+ * @param file_name_1 A files that is being compared
+ * @param file_name_2 A files that file_name_1 is being compared to
+ * @return
+ */
+std::string printComparison(const std::string& file_name_1, const std::string& file_name_2);
+
+
+class TestDirectory
+{
+  public:
+    explicit TestDirectory(const std::string& directory): directory_(directory)
+    {
+        std::filesystem::create_directory(directory_);
+    }
+
+    ~TestDirectory()
+    {
+        std::filesystem::remove_all(directory_);
+    }
+
+  private:
+    std::string directory_;
+};
 
 }
