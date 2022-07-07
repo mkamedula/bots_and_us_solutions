@@ -4,6 +4,7 @@
 #include <catch2/catch.hpp>
 #include <filesystem>
 
+
 namespace xxxDisplay::tests
 {
 
@@ -11,19 +12,18 @@ SCENARIO("Requested input file does not exists")
 {
     GIVEN("A non-existing file path")
     {
-        REQUIRE_THROWS_AS(BusinessLogic("not_here.txt", "."), exceptions::InputFileException);
+        THEN("The class throws an input file exception")
+        {
+            REQUIRE_THROWS_AS(BusinessLogic("not_here.txt", "."), exceptions::InputFileException);
+        }
     }
 }
 
 SCENARIO("Received file is well-formatted")
 {
-    GIVEN("A valid file with codes and a destination folder")
+    GIVEN("A valid file with codes")
     {
-        std::filesystem::create_directory("test_folder");
-
-        auto folder = GENERATE(".", "test_folder");
-
-        BusinessLogic parser("../../test/resources/input_files/valid_codes.txt", folder);
+        BusinessLogic parser("../../test/resources/input_files/valid_codes.txt", ".");
 
         THEN("The parser exits successfully")
         {
@@ -32,14 +32,15 @@ SCENARIO("Received file is well-formatted")
 
         std::string test_id = GENERATE("2553.png", "0129.png", "3140.png", "6718.png", "1953.png", "4611.png");
 
-        THEN("The correct PNG files are generated")
+        AND_THEN("The correct PNG files are generated")
         {
-            REQUIRE(readPngImage(folder + std::string("/") + test_id) == readPngImage("../../test/resources/png_files/" + test_id));
-            std::filesystem::remove(folder + std::string("/") + test_id);
+            INFO(printComparison(test_id, "../../test/resources/png_files/" + test_id));
+            REQUIRE(readPngImage(test_id) == readPngImage("../../test/resources/png_files/" + test_id));
+            std::filesystem::remove(test_id);
         }
 
-
     }
+
 }
 
 SCENARIO("Provided file may be ill-formatted")
@@ -84,6 +85,46 @@ SCENARIO("Provided file may be ill-formatted")
         BusinessLogic parser("../../test/resources/input_files/unrecognised_character_unicode.txt", ".");
         REQUIRE_THROWS_AS(parser.exert(), exceptions::InputFileException);
         removePngFiles(".");
+    }
+}
+
+
+SCENARIO("Files are saved to a desired directory")
+{
+    GIVEN("A valid file with codes and a destination directory")
+    {
+        std::string directory = "test_directory_2";
+
+        TestDirectory manageDirectory(directory);
+
+        BusinessLogic parser("../../test/resources/input_files/6718_code.txt", directory);
+
+        std::string test_id = "6718.png";
+
+        WHEN("The parser executes successfully")
+        {
+            REQUIRE_NOTHROW(parser.exert());
+            THEN("The PNG files are saved to a desired directory")
+            {
+                REQUIRE(readPngImage(directory + "/" + test_id) == readPngImage("../../test/resources/png_files/" + test_id));
+                std::filesystem::remove(directory + std::string("/") + test_id);
+            }
+        }
+
+
+
+    }
+}
+
+SCENARIO("The destination directory does not exists")
+{
+    GIVEN("A wrong destination directory")
+    {
+        THEN("Class throws a save file exception")
+        {
+            BusinessLogic parser("../../test/resources/input_files/valid_codes.txt", "./not_here");
+            REQUIRE_THROWS_AS(parser.exert(), exceptions::SaveFileException);
+        }
     }
 }
 
