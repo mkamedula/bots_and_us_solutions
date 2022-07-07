@@ -8,8 +8,8 @@
 namespace xxxDisplay
 {
 
-BusinessLogic::BusinessLogic(const std::string& file, std::string save_folder)
-    : save_folder_(std::move(save_folder))
+BusinessLogic::BusinessLogic(const std::string& file, std::string save_directory)
+    : save_directory_(std::move(save_directory))
 {
     input_.open(file);
     if (input_.fail())
@@ -58,7 +58,7 @@ void BusinessLogic::processLine_()
             std::string("BusinessLogic: ") + e.what());
     }
 
-    display_.save(save_folder_ + "/" + line_ + ".png");
+    display_.save(save_directory_ + "/" + line_ + ".png");
 }
 
 } // namespace botsAndUs

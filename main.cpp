@@ -66,19 +66,19 @@ int main(int argc, char* argv[])
     }
 
     logger->info("Open file " + userInput["file"].as<std::string>());
-    if (!userInput["destination_folder"].count())
+    if (!userInput["destination_directory"].count())
     {
         logger->critical(
-            "Please specify the destination folder, see --help for more details on the usage of the program.");
+            "Please specify the destination directory, see --help for more details on the usage of the program.");
         return ExitCodes::UNKNOWN_DESTINATION_POINT;
     }
 
-    logger->info("Files are saved to " + userInput["destination_folder"].as<std::string>());
+    logger->info("Files are saved to " + userInput["destination_directory"].as<std::string>());
 
     try
     {
         xxxDisplay::BusinessLogic parser(userInput["file"].as<std::string>(),
-                                         userInput["destination_folder"].as<std::string>());
+                                         userInput["destination_directory"].as<std::string>());
         parser.exert();
     }
     catch (xxxDisplay::exceptions::InputFileException& e)

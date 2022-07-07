@@ -16,12 +16,12 @@ namespace xxxDisplay
  *
  * The class expects an input text file with a set of 4-digit codes, one per line and no other characters.
  * For each code, it computes a mod 97 checksum, and appends it at the beginning of the code. Then it translates
- * the code to the PNG format that can be read by XXX display. The PNG files are saved to the folder provided to
+ * the code to the PNG format that can be read by XXX display. The PNG files are saved to the directory provided to
  * the constructor.
  *
- * @warning The destination folder must exists, otherwise a exceptions::SaveFileException will be throw and no PNG
+ * @warning The destination directory must exists, otherwise a exceptions::SaveFileException will be throw and no PNG
  * images will be created.
- * @warning This class may overwrite existing PNG images in the destination folder if the names collide.
+ * @warning This class may overwrite existing PNG images in the destination directory if the names collide.
  *
  */
 class BusinessLogic
@@ -31,11 +31,11 @@ class BusinessLogic
     /**
      *
      * @param file name of the file that contains the codes (including path to file)
-     * @param save_folder where to save generated png files (including path to folder). The directory must already exist.
+     * @param save_directory where to save generated png files (including path to directory). The directory must already exist.
      *
      * @throw exceptions::InputFileException could not open the requested input file.
      */
-    BusinessLogic(const std::string& file, std::string save_folder);
+    BusinessLogic(const std::string& file, std::string save_directory);
 
     /**
      * @brief Executed the PNG image generation routine for all codes.

@@ -85,13 +85,13 @@ PngData readPngImage(const std::string& file_name)
     return pngData;
 }
 
-void removePngFiles(const std::string& folder)
+void removePngFiles(const std::string& directory)
 {
-    for (const auto & folderIter : std::filesystem::directory_iterator(folder))
+    for (const auto & directoryIter : std::filesystem::directory_iterator(directory))
     {
-        if (folderIter.path().extension() == ".png")
+        if (directoryIter.path().extension() == ".png")
         {
-            std::filesystem::remove(folderIter.path());
+            std::filesystem::remove(directoryIter.path());
         }
     }
 }
