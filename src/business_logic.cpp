@@ -47,7 +47,7 @@ void BusinessLogic::processLine_()
         checksum_stream_ << std::setw(2) << std::setfill('0') << std::to_string(checksum);
         display_.update(checksum_stream_.str() + line_);
     }
-    catch (exceptions::UnexpectedLength& e)
+    catch (exceptions::UnsupportedLength& e)
     {
         throw exceptions::InputFileException(
             std::string("BusinessLogic: ") + e.what());

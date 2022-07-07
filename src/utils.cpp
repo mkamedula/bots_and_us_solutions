@@ -26,7 +26,7 @@ uint32_t getMod97(const std::string& code)
     }
     catch (std::out_of_range& e)
     {
-        throw exceptions::UnexpectedLength("getMod97: Received too long input argument. "
+        throw exceptions::UnsupportedLength("getMod97: Received too long input argument. "
                                            "Currently maximum 9-digit numbers are supported.");
     }
 

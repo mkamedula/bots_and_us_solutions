@@ -78,15 +78,15 @@ struct LibpngException : public XxxDisplayException
 /**
  * @brief An exception that is thrown when an method received an argument of an unexpected length
  */
-struct UnexpectedLength : public XxxDisplayException
+struct UnsupportedLength : public XxxDisplayException
 {
   public:
     /**
      * @param msg A message describing an error
      */
-    explicit UnexpectedLength(std::string msg);
+    explicit UnsupportedLength(std::string msg);
 
-    ~UnexpectedLength() override = default;
+    ~UnsupportedLength() override = default;
 
 };
 

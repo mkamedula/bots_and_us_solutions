@@ -31,7 +31,7 @@ LibpngException::LibpngException(std::string msg)
 {
 }
 
-UnexpectedLength::UnexpectedLength(std::string msg)
+UnsupportedLength::UnsupportedLength(std::string msg)
     : XxxDisplayException(std::move(msg))
 {
 }
