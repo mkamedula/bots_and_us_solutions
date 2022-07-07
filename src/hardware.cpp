@@ -3,6 +3,7 @@
 #include "utils.h"
 
 #include <algorithm>
+#include <iostream>
 
 namespace xxxDisplay
 {
@@ -12,12 +13,12 @@ Hardware::Hardware()
     pixelCode_.fill(0b11111111);
 }
 
-const std::array<uint8_t, 32>& Hardware::get()
+const std::array<uint8_t, 32>& Hardware::get() const
 {
     return pixelCode_;
 }
 
-void Hardware::save(const std::string& file_name)
+void Hardware::save(const std::string& file_name) const
 {
     save1DPng_(get(), file_name);
 }
@@ -44,12 +45,12 @@ void Hardware::update(const std::string& code)
     {
         pixelCode_[start++] = bitMap_.at(value);
     }
+
 }
 
 
-void Hardware::save1DPng_(const std::array<uint8_t, 32>& data, const std::string& file_name)
+void Hardware::save1DPng_(const std::array<uint8_t, 32>& data, const std::string& file_name) const
 {
-
     /* create file */
     FILE* fp = fopen(file_name.c_str(), "wb");
 

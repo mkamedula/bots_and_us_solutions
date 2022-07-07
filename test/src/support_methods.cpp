@@ -137,4 +137,15 @@ std::string printComparison(const std::string& file_name_1, const std::string& f
 
     return "Both images match";
 }
+
+TestDirectory::TestDirectory(const std::string& directory)
+    : directory_(directory)
+{
+    std::filesystem::create_directory(directory_);
+}
+
+TestDirectory::~TestDirectory()
+{
+    std::filesystem::remove_all(directory_);
+}
 }

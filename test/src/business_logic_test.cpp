@@ -107,7 +107,6 @@ SCENARIO("Files are saved to a desired directory")
             THEN("The PNG files are saved to a desired directory")
             {
                 REQUIRE(readPngImage(directory + "/" + test_id) == readPngImage("../../test/resources/png_files/" + test_id));
-                std::filesystem::remove(directory + std::string("/") + test_id);
             }
         }
 

@@ -10,8 +10,8 @@ namespace xxxDisplay
  * output of the business layer to the bit and pixel streams understandable by the hardware.
  * It holds a mapping between the higher-level human readable codes and internal hardware logic.
  *
- * High bit - inactive segment
- * Low bit - active segment
+ * High bit - inactive segment - white pixel
+ * Low bit - active segment - black pixel
  */
 class Hardware
 {
@@ -25,7 +25,7 @@ class Hardware
      * bits and inactive segments are represented by the high bits.
      * @return current status of the display
      */
-    const std::array<uint8_t, 32>& get();
+    const std::array<uint8_t, 32>& get() const;
 
     /**
      * @brief Update the bit stream of the display represented by this instance based on the human-readable string value.
@@ -49,11 +49,14 @@ class Hardware
      * @warning If the previous file with a given name exists in a destination directory it will be overwritten
      * by this method.
      */
-    void save(const std::string& file_name);
+    void save(const std::string& file_name) const;
 
   private:
     /**
-     * Mapping between the supported ASCII characters and XXX display character segments
+     * Mapping between the supported ASCII characters and XXX display character segments.
+     *
+     * High bit - inactive segment - white pixel
+     * Low bit - active segment - black pixel
      */
     const std::unordered_map<char, uint8_t> bitMap_{{'0', 0b10001000},
                                                     {'1', 0b10111101},
@@ -83,7 +86,7 @@ class Hardware
      * @throw SaveFileException Could not open the file for saving or and empty image has been requested.
      *
      */
-    void save1DPng_(const std::array<uint8_t, 32>& data, const std::string& file_name);
+    void save1DPng_(const std::array<uint8_t, 32>& data, const std::string& file_name) const;
 
 
 };

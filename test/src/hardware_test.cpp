@@ -3,9 +3,6 @@
 #include "support_methods.h"
 
 #include <catch2/catch.hpp>
-#include <filesystem>
-#include <thread>
-#include <iostream>
 
 namespace xxxDisplay::tests
 {
@@ -38,7 +35,6 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
 
         THEN("The pixel code is generated correctly")
         {
-
             REQUIRE_NOTHROW(screen.update(code));
 
             REQUIRE(screen.get()[0] == 0b11111111);
@@ -54,34 +50,34 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
             {
                 return value == 0b11111111;
             }));
-        }
 
-        GIVEN("A valid directory")
-        {
-            std::string directory = "test_directory";
 
-            TestDirectory manageDirectory(directory);
-
-            THEN("The correct PNG image is saved in the desired directory")
+            GIVEN("A valid directory")
             {
-                REQUIRE_NOTHROW(screen.save(directory + "/" + code + ".png"));
-                INFO(printComparison(directory + std::string("/") + code + ".png",
-                                     "../../test/resources/png_files/" + code + ".png"));
-                REQUIRE(readPngImage(directory + std::string("/") + code + ".png") ==
-                        readPngImage("../../test/resources/png_files/" + code + ".png"));
-                std::filesystem::remove(directory + std::string("/") + code + ".png");
+                std::string directory = "test_directory";
+
+                TestDirectory manageDirectory(directory);
+
+                THEN("The correct PNG image is saved in the desired directory")
+                {
+                    REQUIRE_NOTHROW(screen.save(directory + "/" + code + ".png"));
+                    INFO(printComparison(directory + std::string("/") + code + ".png",
+                                         "../../test/resources/png_files/" + code + ".png"));
+                    REQUIRE(readPngImage(directory + std::string("/") + code + ".png") ==
+                            readPngImage("../../test/resources/png_files/" + code + ".png"));
+                }
+
+
             }
 
-
-        }
-
-        GIVEN("An in-valid directory")
-        {
-            std::string directory = "not_here";
-
-            THEN("A save file exception is thrown")
+            GIVEN("An in-valid directory")
             {
-                REQUIRE_THROWS_AS(screen.save(directory + "/" + code + ".png"), exceptions::SaveFileException);
+                std::string directory = "not_here";
+
+                THEN("A save file exception is thrown")
+                {
+                    REQUIRE_THROWS_AS(screen.save(directory + "/" + code + ".png"), exceptions::SaveFileException);
+                }
             }
         }
     }

@@ -50,22 +50,23 @@ void removePngFiles(const std::string& directory);
  */
 std::string printComparison(const std::string& file_name_1, const std::string& file_name_2);
 
-
+/**
+ * A helper class to manage a temporary test directory. It is responsible for managing the life time of the
+ * directory. It creates the resource on construction and removes it when the test is finished.
+ */
 class TestDirectory
 {
   public:
-    explicit TestDirectory(const std::string& directory): directory_(directory)
-    {
-        std::filesystem::create_directory(directory_);
-    }
+    /**
+     *
+     * @param directory Path to the directory that is being managed by the class
+     */
+    explicit TestDirectory(const std::string& directory);
 
-    ~TestDirectory()
-    {
-        std::filesystem::remove_all(directory_);
-    }
+    ~TestDirectory();
 
   private:
-    std::string directory_;
+    std::string directory_; //! Path to the directory that is being managed by the class
 };
 
 }
