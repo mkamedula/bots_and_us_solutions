@@ -14,7 +14,7 @@ BusinessLogic::BusinessLogic(const std::string& file, std::string save_folder)
     input_.open(file);
     if (input_.fail())
     {
-        throw exceptions::InputFileException("FileWrapper: Could not open the requested input file " + file + ".");
+        throw exceptions::InputFileException("BusinessLogic: Could not open the requested input file " + file + ".");
     }
 
     line_.resize(4);
@@ -34,7 +34,7 @@ void BusinessLogic::processLine_()
     if (line_.size() != 4)
     {
         throw exceptions::InputFileException(
-            "FileWrapper: Received unexpected line length. Expected 4, received " + std::to_string(line_.size()) +
+            "BusinessLogic: Received unexpected line length. Expected 4, received " + std::to_string(line_.size()) +
             ".");
     }
 
@@ -50,12 +50,12 @@ void BusinessLogic::processLine_()
     catch (exceptions::UnexpectedLength& e)
     {
         throw exceptions::InputFileException(
-            std::string("FileWrapper: ") + e.what());
+            std::string("BusinessLogic: ") + e.what());
     }
     catch (exceptions::UnexpectedCharacter& e)
     {
         throw exceptions::InputFileException(
-            std::string("FileWrapper: ") + e.what());
+            std::string("BusinessLogic: ") + e.what());
     }
 
     display_.save(save_folder_ + "/" + line_ + ".png");

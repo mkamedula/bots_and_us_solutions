@@ -27,7 +27,7 @@ void Hardware::update(const std::string& code)
 {
     if (code.size() != 6)
     {
-        throw exceptions::UnexpectedLength("Bit stream received unexpected code length. Only six digit numbers are supported.");
+        throw exceptions::UnsupportedLength("Hardware received unexpected code length. Only six digit numbers are supported.");
     }
 
     if (std::any_of(code.begin(), code.end(), [&](const char c)
@@ -35,7 +35,7 @@ void Hardware::update(const std::string& code)
         return !bitMap_.count(c);
     }))
     {
-        throw exceptions::UnexpectedCharacter("Bit stream received unexpected character value. Only numerical values are supported.");
+        throw exceptions::UnexpectedCharacter("Hardware received unexpected character value. Only numerical values are supported.");
     }
 
     auto start = pixelOffsetBytes_;
