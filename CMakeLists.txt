@@ -99,7 +99,6 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
             test/src/business_logic_test.cpp
             test/src/checksum_test.cpp
             test/src/hardware_test.cpp
-            test/src/bit_stream_test.cpp
             test/src/save_png_test.cpp
             test/src/support_methods.cpp
             )

@@ -36,3 +36,5 @@ install/
 *build*/
 
 .idea/
+
+documentation/

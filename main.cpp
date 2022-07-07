@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
     try
     {
         xxxDisplay::BusinessLogic parser(userInput["file"].as<std::string>(),
-                                       userInput["destination_folder"].as<std::string>());
+                                         userInput["destination_folder"].as<std::string>());
         parser.exert();
     }
     catch (xxxDisplay::exceptions::InputFileException& e)
