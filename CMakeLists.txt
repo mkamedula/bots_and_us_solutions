@@ -19,7 +19,6 @@ add_library(${CMAKE_PROJECT_NAME}_lib
 
 target_include_directories(${CMAKE_PROJECT_NAME}_lib PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/template>
         $<INSTALL_INTERFACE:include>
         )
 
@@ -61,14 +60,13 @@ install(FILES "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}_libConfig.cmake"
         "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}_libConfigVersion.cmake"
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
 
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ ${PROJECT_SOURCE_DIR}/template/ DESTINATION include/)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION include/)
 
 
 add_executable(${CMAKE_PROJECT_NAME} main.cpp)
 
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/template>
         $<INSTALL_INTERFACE:include>
         )
 
@@ -99,7 +97,6 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
             test/src/business_logic_test.cpp
             test/src/checksum_test.cpp
             test/src/hardware_test.cpp
-            test/src/save_png_test.cpp
             test/src/support_methods.cpp
             )
 

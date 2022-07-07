@@ -70,6 +70,20 @@ class Hardware
 
     const size_t pixelOffsetBytes_ = 1; //! Offset to the first significant bit in bytes
 
+    /**
+     * Save a PNG image from provided 1-D pixel data. Created image will be 1-bit depth, greyscale and 1-bit high.
+     * Each entry in the container will be cast to unsigned char with each bit representing a pixel
+     * The created image will have a width equal to eight times the size of the container.
+     *
+     * @param data 1-D container with pixel data
+     * @param file_name name of the generated PNG image (with path). The parent directory must exists or
+     * SaveFileException will be thrown.
+     *
+     * @throw LibpngException Encounter an internal error from libpng.
+     * @throw SaveFileException Could not open the file for saving or and empty image has been requested.
+     *
+     */
+    void save1DPng_(const std::array<uint8_t, 32>& data, const std::string& file_name);
 
 
 };
