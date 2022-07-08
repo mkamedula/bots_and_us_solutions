@@ -62,7 +62,7 @@ The program can terminate with following exit codes:
 To display the help message run
 * ./XxxDisplay_CodeParser -h
 
-# Third party libraries
+# THIRD PARTY LIBRARIES
 This program uses following third party libraries.
 
 * spdlog for logging, v2: https://github.com/gabime/spdlog
@@ -74,7 +74,7 @@ Supported copies of these libraries are contained within this repository.
 Furtheer more the following system library is required:
 * libpng 1.6.37
 
-# Troubleshooting
+# TROUBLESHOOTING
 
 Error:
 
@@ -94,7 +94,7 @@ Error:
 Solution:
 Filesystem is a C++17 addition. This error means that the gcc version does not support C++17. Please update the gcc.
  
-# Further work:
+# FURTHER WORK
  
 XXX Display can support more than 10000 codes. It has seven segments per character, so it can support up to 7^2=49 different symbols per character and 49^6 different segment combinations (or 49^4 without modifying the checksum).
  
