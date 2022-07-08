@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-PROJECT(XxxDisplay_CodeParser VERSION 0.1.0)
+PROJECT(XxxDisplay_CodeParser VERSION 1.0.0)
 
 MESSAGE(STATUS "Compiling XxxDisplay_CodeParser")
 
