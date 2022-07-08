@@ -11,8 +11,8 @@ For each code, a 97 mod checksum is prepended to the number. It results in a 6-d
 
 ## Minimum requirements (Tested set-up)
 
-* CMake 3.21
-* gcc 10.3
+* CMake 3.21 - requires support for CMakePresets
+* gcc 10.3 - at least compatible with C++17 standard
 * libpng 1.6.37
 * Ubuntu 20.04.4 LTS
 
