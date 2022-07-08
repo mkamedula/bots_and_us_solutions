@@ -107,7 +107,7 @@ XXX Display can support more than 10000 codes. It has seven segments per charact
  
 Even though some of these combinations may not be valid (0000 0000) or may not work well with the OCR system, new combinations of segments could be agreed upon to represent the higher values. E.g.,
  * 10 - A - 1110 0111
- * 11 - B - 1101 0110
+ * 11 - B - 1111 0001
  * 12 - C - 0011 0101
  * ...
  
