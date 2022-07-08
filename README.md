@@ -47,7 +47,7 @@ where
 * {output_directory} is a directory where the PNG images will be saved. Please note that the {output_directory} must exists before the program executes, 
 otherwise an exception will be thrown.
 
-The program will log basic information about its input file and output directory as well as any eventual errors detected into the simple log file save in the run time directory.
+The program will log basic information about its input file and output directory as well as any eventual errors detected into the simple log file saved in the run time directory.
 
 The program can terminate with following exit codes:
    - 0 - program finished sucesfully and no error was detected,
