@@ -1,5 +1,10 @@
 # bots_and_us_solutions
-This repository contains a solution code for the for BotsAndUs application coding challenge
+This repository contains a software to process an input file of 4-digit codes to a PNG images understandable by XXX Displays.
+
+Input files are expected to be pure text files, where each line consists of a 4-digit number (a code) and no other character is present in the text file.
+
+For each code, a 97 mod checksum is prepend at the begining of the number. It results in a 6-digit code. For each 6-digit number, a PNG image is generated. This PNG image can be sent to the XXX Display to display the 6-digit number. Each file is named based on the 4-digit initial code, e.g. a code 8420 will result in a output file 8420.png. All files are saved to the directory specifed as an input argument to the program.
+
 
 # INSTALL
 
@@ -26,6 +31,37 @@ To install the program:
 
 # RUNNING THE PROGRAM
 
+To run the program go to the {INSTALL_DIRECTORY}/bin used when installing the program. And run
+* ./XxxDisplay_CodeParser -f {input_file.txt} -d {output_directory}
 
+where 
+
+* {input_file.txt} is a name of the file to be processed
+* {output_directory} is a directory where the PNG images will be saved. Please note that the {output_directory} must exists before the program executes, 
+otherwise an exception will be thrown.
+
+The program will log basic information about its input file and output directory as well as any eventual errors detected into the simple log file save in the run time directory.
+
+The program can terminate with following exit codes:
+   - SUCCESS = 0,
+   - INPUT_FILE_ERROR = 1,
+   - LIBPNG_ERROR = 2,
+   - SAVE_FILE_ERROR = 3,
+   - SPDLOG_INIT_ERROR = 4,
+   - UNKNOWN_DESTINATION_POINT = 5,
+   - UNKNOWN_EXCEPTION = 6,
+
+To display the help message run
+* ./XxxDisplay_CodeParser -h
 
 # Third party libraries
+This program uses a following third party libraries.
+
+* spdlog for logging: https://github.com/gabime/spdlog
+* cxxopts for handling input arguments: https://github.com/jarro2783/cxxopts
+* CATCH2 unit test library: https://github.com/catchorg/Catch2
+
+Supported and tested copies of these libraries are contained within this repository. 
+
+Furtheer more the following system library is required:
+* libpng 1.6.37
