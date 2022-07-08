@@ -39,6 +39,7 @@ To install the program - minimum CMake 3.21, gcc 10:
 
 # RUNNING THE PROGRAM
 
+## Executing the program
 To run the program go to the {INSTALL_DIRECTORY}/bin directory and run
 * ./XxxDisplay_CodeParser -f {input_file.txt} -d {output_directory}
 
@@ -48,7 +49,11 @@ where
 * {output_directory} is a directory where the PNG images will be saved. Please note that the {output_directory} must exists before the program executes, 
 otherwise an exception will be thrown.
 
+## Logs 
+
 The program will log basic information about its input file and output directory as well as any eventual errors detected into the simple log file saved in the run time directory.
+
+## Exit Codes
 
 The program can terminate with following exit codes:
    - 0 - program finished sucesfully and no error was detected,
@@ -58,6 +63,8 @@ The program can terminate with following exit codes:
    - 4 - a program could not initiate a log file,
    - 5 - no destination directory has been specified by the user,
    - 6 - unknown and unexpected exception has occured,
+
+## Help message
 
 To display the help message run
 * ./XxxDisplay_CodeParser -h
@@ -76,7 +83,7 @@ Furtheer more the following system library is required:
 
 # TROUBLESHOOTING
 
-Error:
+## Error:
 
 > Installing spdlog.
 >
@@ -87,7 +94,7 @@ Error:
 Solution:
 It means that the CMake version used is to old. Please update the CMake
 
-Error: 
+## Error: 
 > fatal error: filesystem: No such file or directory
 > #include <filesystem>
 
