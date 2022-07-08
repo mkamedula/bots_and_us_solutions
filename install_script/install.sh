@@ -9,7 +9,7 @@
 # 2 - installation directory for all components. Default: install folder in the project root directory
 # 3 - value of the CMAKE_BUILD_TYPE and the CMake preset used to compile the main application. Default: Release,
 #     Accepted: Release, Debug
-# 4- specify custom cmake executable
+# 4- specify custom cmake executable. Default: cmake, Accepted: any cmake executable
 
 # switch to the script directory
 cd "$(dirname "$(realpath "$0")")";
