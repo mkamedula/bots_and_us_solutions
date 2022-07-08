@@ -18,7 +18,7 @@ For each code, a 97 mod checksum is prepended to the number. It results in a 6-d
 
 ## Installation procedure:
 
-To install the program - minimum CMake 3.21:
+To install the program - minimum CMake 3.21, gcc 10:
 
 * make sure the libpng is installed on the systems:
   * sudo apt-get install libpng-dev
