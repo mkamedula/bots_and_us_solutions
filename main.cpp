@@ -40,9 +40,6 @@ int main(int argc, char* argv[])
     logger->set_level(spdlog::level::info);
     logger->info("Start the Xxx Display Code Parser Application");
 
-    // change log pattern
-    logger->set_pattern("[%H:%M:%S %z] [%^---%L---%$] %v");
-
 
     cxxopts::Options options("XXX Display Code Parser");
     options.add_options()("f,file", "Name of the file to be processed including the path",
