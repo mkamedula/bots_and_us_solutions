@@ -92,3 +92,27 @@ Error:
 
 Solution:
 Filesystem is a C++17 addition. This error means that the gcc version does not support C++17. Please update the gcc.
+ 
+# Further work:
+ 
+XXX Display can support more than 10000 codes. It has seven segments per character, so it can support up to 7^2=49 different symbols per character and 49^6 different segment combinations (or 49^4 without modifying the checksum).
+ 
+Even though some of these combinations may not be valid (0000 0000) or may not work well with the OCR system, new combinations of segments could be agreed upon to represent the higher values. E.g.,
+ * 10 - A - 1110 0111
+ * 11 - B - 1101 0110
+ * 12 - C - 0011 0101
+ * ...
+ 
+Other, more abstract symbols could be used as well if required.
+ 
+Then the new symbols should be added to the 'bitMap_' member of the XxxDisplay class. No other change would be required in the XxxDisplay class.
+ 
+The checksum mod97 method would have to be updated to accept non-digit characters and perform its computation in an X-base, where X is a number of supported characters. A different modulo operator may be required. The std::stoi method that translates the string digit into the numerical value supports non-10-base computations by default. From cppreference:
+ 
+ > The set of valid values for base is {0,2,3,...,36}. The set of valid digits for base-2 integers is {0,1}, for base-3 integers is {0,1,2}, and so on. For bases larger than 10, valid digits include alphabetic characters, starting from Aa for base-11 integer, to Zz for base-36 integer. The case of the characters is ignored. 
+ 
+ No changes in the BuissnessLayer class would be required.
+ 
+ 
+
+ 
