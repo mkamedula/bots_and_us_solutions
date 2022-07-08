@@ -20,6 +20,8 @@ For each code, a 97 mod checksum is prepended to the number. It results in a 6-d
 
 To install the program - minimum CMake 3.21:
 
+* make sure the libpng is installed on the systems:
+  * sudo apt-get install libpng-dev
 * download this repository
   * git clone https://github.com/mkamedula/bots_and_us_solutions
 * go to the install_script directory inside the git repo directory
