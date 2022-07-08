@@ -58,9 +58,9 @@ To display the help message run
 # Third party libraries
 This program uses following third party libraries.
 
-* spdlog for logging: https://github.com/gabime/spdlog
-* cxxopts for handling input arguments: https://github.com/jarro2783/cxxopts
-* CATCH2 unit test library: https://github.com/catchorg/Catch2
+* spdlog for logging, v2.0: https://github.com/gabime/spdlog
+* cxxopts for handling input arguments, v2.1: https://github.com/jarro2783/cxxopts
+* CATCH2 unit test library, v2.13: https://github.com/catchorg/Catch2
 
 Supported copies of these libraries are contained within this repository. 
 
