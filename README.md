@@ -72,3 +72,23 @@ Supported copies of these libraries are contained within this repository.
 
 Furtheer more the following system library is required:
 * libpng 1.6.37
+
+# Troubleshooting
+
+Error:
+
+> Installing spdlog.
+>
+> Warning: removing previous spdlog build in /home/rctbg2/test_folder/bots_and_us_solutions/third_party/spdlog/build
+> CMake Error: The source directory "" does not exist.
+> Specify --help for usage, or press the help button on the CMake GUI.<cite>
+
+Solution:
+It means that the CMake version used is to old. Please update the CMake
+
+Error: 
+> fatal error: filesystem: No such file or directory
+> #include <filesystem>
+
+Solution:
+Filesystem is a C++17 addition. This error means that the gcc version does not support C++17. Please update the gcc.
