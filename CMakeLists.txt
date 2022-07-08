@@ -11,7 +11,7 @@ find_package(cxxopts CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 find_package(spdlog CONFIG REQUIRED HINTS ${EXT_LIBS_PATH} NO_DEFAULT_PATH)
 
 add_library(${CMAKE_PROJECT_NAME}_lib
-        src/hardware.cpp
+        src/xxx_display.cpp
         src/exceptions.cpp
         src/business_logic.cpp
         src/utils.cpp
@@ -53,7 +53,6 @@ write_basic_package_version_file("${CMAKE_PROJECT_NAME}_libConfigVersion.cmake"
 
 install(EXPORT ${CMAKE_PROJECT_NAME}_lib_Targets
         FILE ${CMAKE_PROJECT_NAME}_libTargets.cmake
-        #        NAMESPACE test
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake)
 
 install(FILES "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}_libConfig.cmake"
@@ -96,7 +95,7 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
             test/main_test.cpp
             test/src/business_logic_test.cpp
             test/src/checksum_test.cpp
-            test/src/hardware_test.cpp
+            test/src/xxx_display_test.cpp
             test/src/support_methods.cpp
             )
 
@@ -112,12 +111,12 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
     include(Catch)
     catch_discover_tests(${CMAKE_PROJECT_NAME}_tests)
-#
-#    add_custom_command(
-#            TARGET ${CMAKE_PROJECT_NAME}_tests
-#            COMMENT "Run tests"
-#            POST_BUILD
-#            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-#            COMMAND ${CMAKE_CTEST_COMMAND} -C $<CONFIGURATION> --output-on-failures
-#    )
+
+    add_custom_command(
+            TARGET ${CMAKE_PROJECT_NAME}_tests
+            COMMENT "Run tests"
+            POST_BUILD
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            COMMAND ${CMAKE_CTEST_COMMAND} -C $<CONFIGURATION> --output-on-failures
+    )
 endif ()

@@ -13,32 +13,33 @@ namespace xxxDisplay
  * High bit - inactive segment - white pixel
  * Low bit - active segment - black pixel
  */
-class Hardware
+class XxxDisplay
 {
 
   public:
 
-    Hardware();
+    XxxDisplay();
 
     /**
-     * @brief Get current status of the display as a bit stream where active segments are represented by the low
-     * bits and inactive segments are represented by the high bits.
+     * @brief Get the current status of the display as a bit stream. Active segments are represented by the low
+     * bits, and inactive segments are represented by the high bits.
+     *
      * @return current status of the display
      */
     const std::array<uint8_t, 32>& get() const;
 
     /**
      * @brief Update the bit stream of the display represented by this instance based on the human-readable string value.
-     * @param code 6-digit ASCII code to be displayed containing only supported characters (see bitMap_)
+     * @param code 6-digit ASCII code to be displayed containing only supported characters (see bitMap_ member)
      *
-     * @throw exceptions::UnexpectedLength received a code of a wrong length, only 6-character codes are supported.
-     * @throw exceptions::UnexpectedCharacter received unexpected character value. See bitMap_ filed for list
+     * @throw exceptions::UnexpectedLength received a code of wrong length, only 6-character codes are supported.
+     * @throw exceptions::UnexpectedCharacter received unexpected character value. See bitMap_ member for list
      * of supported characters.
      */
     void update(const std::string& code);
 
     /**
-     * @brief Save current status of the display to the png file.
+     * @brief Save current status of the display to the PNG file.
      * @param file_name name of the PNG file that will be created. The parent directory must exist or
      * a exceptions::SaveFileException will be throw and PNG images will not be created
      *
@@ -74,8 +75,8 @@ class Hardware
     const size_t pixelOffsetBytes_ = 1; //! Offset to the first significant bit in bytes
 
     /**
-     * Save a PNG image from provided 1-D pixel data. Created image will be 1-bit depth, greyscale and 1-bit high.
-     * Each entry in the container will be cast to unsigned char with each bit representing a pixel
+     * Save a PNG image from 1-D pixel data. Created image will be 1-bit depth, greyscale and 1-bit high.
+     * Each entry in the container will be cast to unsigned char with each bit representing a pixel.
      * The created image will have a width equal to eight times the size of the container.
      *
      * @param data 1-D container with pixel data
@@ -83,7 +84,7 @@ class Hardware
      * SaveFileException will be thrown.
      *
      * @throw LibpngException Encounter an internal error from libpng.
-     * @throw SaveFileException Could not open the file for saving or and empty image has been requested.
+     * @throw SaveFileException Could not open the file for saving.
      *
      */
     void save1DPng_(const std::array<uint8_t, 32>& data, const std::string& file_name) const;

@@ -1,5 +1,5 @@
 #include "exceptions.h"
-#include "hardware.h"
+#include "xxx_display.h"
 #include "utils.h"
 
 #include <algorithm>
@@ -8,23 +8,23 @@
 namespace xxxDisplay
 {
 
-Hardware::Hardware()
+XxxDisplay::XxxDisplay()
 {
     pixelCode_.fill(0b11111111);
 }
 
-const std::array<uint8_t, 32>& Hardware::get() const
+const std::array<uint8_t, 32>& XxxDisplay::get() const
 {
     return pixelCode_;
 }
 
-void Hardware::save(const std::string& file_name) const
+void XxxDisplay::save(const std::string& file_name) const
 {
     save1DPng_(get(), file_name);
 }
 
 
-void Hardware::update(const std::string& code)
+void XxxDisplay::update(const std::string& code)
 {
     if (code.size() != 6)
     {
@@ -49,7 +49,7 @@ void Hardware::update(const std::string& code)
 }
 
 
-void Hardware::save1DPng_(const std::array<uint8_t, 32>& data, const std::string& file_name) const
+void XxxDisplay::save1DPng_(const std::array<uint8_t, 32>& data, const std::string& file_name) const
 {
     /* create file */
     FILE* fp = fopen(file_name.c_str(), "wb");

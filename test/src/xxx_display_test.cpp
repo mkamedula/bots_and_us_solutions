@@ -1,5 +1,5 @@
 #include "exceptions.h"
-#include "hardware.h"
+#include "xxx_display.h"
 #include "support_methods.h"
 
 #include <catch2/catch.hpp>
@@ -31,7 +31,7 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
                                     0b00101001,
                                     0b00111100})}));
 
-        Hardware screen;
+        XxxDisplay screen;
 
         THEN("The pixel code is generated correctly")
         {
@@ -87,7 +87,7 @@ SCENARIO("An invalid code has been provided to the pixel generator")
 {
     GIVEN("A display object with a valid state")
     {
-        Hardware screen;
+        XxxDisplay screen;
         screen.update("920834");
         auto init_array = screen.get();
 
