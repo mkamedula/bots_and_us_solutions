@@ -9,6 +9,7 @@
 # 2 - installation directory for all components. Default: install folder in the project root directory
 # 3 - value of the CMAKE_BUILD_TYPE and the CMake preset used to compile the main application. Default: Release,
 #     Accepted: Release, Debug
+# 4- specify custom cmake executable
 
 # switch to the script directory
 cd "$(dirname "$(realpath "$0")")";
@@ -18,6 +19,7 @@ ROOT_DIR=${PWD}/..
 CLEAN=${1:-false}
 INSTALL_ROOT="$(realpath ${2:-${ROOT_DIR}/install})"
 BUILD_TYPE=${3:-Release}
+CMAKE=${4:-cmake}
 
 # A function to handle standard installation of the third party library
 install_library() {
@@ -32,8 +34,8 @@ install_library() {
       rm -R install;
   fi
 
-  cmake  -Bbuild/${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${INSTALL_ROOT}/ -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${args}  || exit 1
-  cmake  --build build/${BUILD_TYPE} --target install -- -j $(nproc)  || exit 1
+  ${CMAKE}  -Bbuild/${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${INSTALL_ROOT}/ -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ${args}  || exit 1
+  ${CMAKE}  --build build/${BUILD_TYPE} --target install -- -j $(nproc)  || exit 1
 }
 
 library=spdlog
@@ -57,5 +59,5 @@ if [ -d build/${BUILD_TYPE} ] && [ "${CLEAN}" = true ]; then
   rm -R build/${BUILD_TYPE}
 fi
 
-cmake --preset ${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${INSTALL_ROOT}
-cmake --build build/${BUILD_TYPE} --target install -- -j $(nproc)  || exit 1
+${CMAKE} --preset ${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=${INSTALL_ROOT}
+${CMAKE} --build build/${BUILD_TYPE} --target install -- -j $(nproc)  || exit 1
