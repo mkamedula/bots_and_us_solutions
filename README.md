@@ -34,7 +34,7 @@ To install the program - minimum CMake 3.21, gcc 10:
 * run the installation script. Please be aware that at least CMake 3.21 is required for the script to execute correctly. The script will install all third-party libraries that are not mentioned in the minimum requirements section (see Third party libraries section), and the code itself
   * ./install.sh
 * By default, the script will install the files to the ${GIT_ROOT_DIR}/install directory, where GIT_ROOT_DIR is a root directory of this repository. If you want to change the installation directory, you can do it using the input arguments
-  * ./install.sh {CLEAN} {INSTALL_DIRECTORY} {CMAKE_BUILD_TYPE}, where CLEAN takes true/false values and defines whether the clean build should be performed. Please see install.sh script directly for more details on the user arguments.
+  * ./install.sh {CLEAN} {INSTALL_DIRECTORY} {CMAKE_BUILD_TYPE} {CMAKE}, where CLEAN takes true/false values and defines whether the clean build should be performed, CMAKE_BUILD_TYPE is a build type used and a preset to be loaded, and cmake is a cmake executable to be used for compilation. Please see install.sh script directly for more details on the user arguments.
 
 # RUNNING THE PROGRAM
 
