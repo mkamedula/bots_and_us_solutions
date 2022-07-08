@@ -9,7 +9,7 @@ For each code, a 97 mod checksum is prepended to the number. It results in a 6-d
 
 # INSTALL
 
-## Minimum requirements (Tested set-up)
+## Tested set-up - Minimum requirements
 
 * CMake 3.21 - requires support for CMakePresets
 * gcc 10.3 - at least compatible with C++17 standard
