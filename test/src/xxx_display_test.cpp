@@ -58,25 +58,29 @@ SCENARIO("A pixel code is correctly generated when a valid input code is provide
 
                 TestDirectory manageDirectory(directory);
 
-                THEN("The correct PNG image is saved in the desired directory")
+                WHEN("The XXX display is asked to save an image")
                 {
                     REQUIRE_NOTHROW(screen.save(directory + "/" + code + ".png"));
-                    INFO(printComparison(directory + std::string("/") + code + ".png",
-                                         "../../test/resources/png_files/" + code + ".png"));
-                    REQUIRE(readPngImage(directory + std::string("/") + code + ".png") ==
-                            readPngImage("../../test/resources/png_files/" + code + ".png"));
+                    THEN("The correct PNG image is saved in the desired directory")
+                    {
+                        INFO(printComparison(directory + std::string("/") + code + ".png",
+                                             "../../test/resources/png_files/" + code + ".png"));
+                        REQUIRE(readPngImage(directory + std::string("/") + code + ".png") ==
+                                readPngImage("../../test/resources/png_files/" + code + ".png"));
+                    }
                 }
-
-
             }
 
             GIVEN("An in-valid directory")
             {
                 std::string directory = "not_here";
-
-                THEN("A save file exception is thrown")
+                WHEN("The XXX display is asked to save an image")
                 {
-                    REQUIRE_THROWS_AS(screen.save(directory + "/" + code + ".png"), exceptions::SaveFileException);
+                    THEN("A save file exception is thrown")
+                    {
+                        REQUIRE_THROWS_AS(screen.save(directory + "/" + code + ".png"),
+                                          exceptions::SaveFileException);
+                    }
                 }
             }
         }
@@ -94,7 +98,7 @@ SCENARIO("An invalid code has been provided to the pixel generator")
         WHEN("An invalid input code is send to the display")
         {
             auto data = GENERATE("67y895", "6", "asccd ty ", "88865556678", " 998i8");
-            THEN("The method returns false and it the hardware state is not affected.")
+            THEN("The method returns false and the display state is not affected.")
             {
                 REQUIRE_THROWS(screen.update(data));
                 REQUIRE(screen.get() == init_array);

@@ -51,7 +51,7 @@ SCENARIO("An invalid string is provided to the checksum")
 {
     GIVEN("A negative number")
     {
-        THEN("The checksum throws and unexpected character exception")
+        THEN("The checksum throws with the unexpected character exception")
         {
             REQUIRE_THROWS_AS(getMod97("-4586"), exceptions::UnexpectedCharacter);
         }
@@ -59,7 +59,7 @@ SCENARIO("An invalid string is provided to the checksum")
 
     GIVEN("A non-numerical string")
     {
-        THEN("The checksum throws and unexpected character exception")
+        THEN("The checksum throws with the unexpected character exception")
         {
             REQUIRE_THROWS_AS(getMod97("A text"), exceptions::UnexpectedCharacter);
         }
@@ -67,7 +67,7 @@ SCENARIO("An invalid string is provided to the checksum")
 
     GIVEN("A partial numeric string")
     {
-        THEN("The checksum throws and unexpected character exception")
+        THEN("The checksum throws with the unexpected character exception")
         {
             REQUIRE_THROWS_AS(getMod97("5f48"), exceptions::UnexpectedCharacter);
         }
@@ -75,7 +75,7 @@ SCENARIO("An invalid string is provided to the checksum")
 
     GIVEN("A long input with more than 32-bits")
     {
-        THEN("The checksum throws and unsupported length exception")
+        THEN("The checksum throws with an unsupported length exception")
         {
             REQUIRE_THROWS_AS(getMod97("77899458687"), exceptions::UnsupportedLength);
         }
