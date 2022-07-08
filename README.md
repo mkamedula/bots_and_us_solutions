@@ -1,10 +1,10 @@
 # Code Parser for XXX Display 
 
-This repository contains a software to process an input file of 4-digit codes to a PNG images understandable by XXX Displays.
+This repository contains software to process an input file of 4-digit codes to PNG images understandable by XXX Displays.
 
-Input files are expected to be pure text files, where each line consists of a 4-digit number (a code) and no other character is present in the text file.
+Input files are expected to be pure text files, where each line consists of a 4-digit number (a code), and no other character is present in the text file.
 
-For each code, a 97 mod checksum is prepend at the begining of the number. It results in a 6-digit code. For each 6-digit number, a PNG image is generated. This PNG image can be sent to the XXX Display to display the generated code. Each file is named based on the 4-digit initial code, e.g. a code '8420' will result in a output file '8420.png'. All files are saved to the directory specifed as an input argument to the program.
+For each code, a 97 mod checksum is prepended to the number. It results in a 6-digit code. For each 6-digit number, a PNG image is generated. This PNG image can be sent to the XXX Display to display the generated code. Each file is named based on the 4-digit initial code, e.g. a code '8420' will result in an output file '8420.png'. All files are saved to the directory specified as an input argument to the program.
 
 
 # INSTALL
